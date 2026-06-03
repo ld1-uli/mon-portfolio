@@ -1,611 +1,1424 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MON PORTFOLIO</title>
-    <link rel="stylesheet" href="Index.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<style> /* /* =============================================
-   PORTFOLIO - LAMINE DIOUF
-   Feuille de styles principale
-   ============================================= */
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIGDREAM — Dakar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap');
 
-/* ---- VARIABLES GLOBALES ---- */
-:root {
-  --color-primary: darkblue;
-  --color-bg: whitesmoke;
-  --color-white: white;
-  --color-black: black;
-  --color-gray: gray;
-  --font-main: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  --border-radius-sm: 5px;
-  --border-radius-md: 10px;
-  --border-radius-lg: 15px;
-  --border-std: 2px solid black;
-  --border-white: 2px solid white;
-}
+    :root {
+      --white: #ffffff;
+      --black: #000000;
+      --gray: #888;
+      --dark: #0d0d0d;
+      --border: #1f1f1f;
+      --accent: #fff;
+    }
 
-/* ---- RESET & BASE ---- */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      overflow-x: hidden;
+    }
 
-body {
-  color: aliceblue;
-  background-color: var(--color-white);
-}
+    /* ════════════════════════════════
+       NAVBAR
+    ════════════════════════════════ */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.93);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid #1a1a1a;
+      z-index: 1000;
+      animation: navIn 0.7s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes navIn { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
 
-/* =============================================
-   NAVBAR
-   ============================================= */
-.navbar {
-  width: 100%;
-  border: 4px solid var(--color-white);
-  display: flex;
-  justify-content: space-between;
-  height: 70px;
-  background-color: var(--color-bg);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 12px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative;
+    }
 
-.navbar-left {
-  display: flex;
-  align-items: center;
-}
+    .logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-wrap img:first-child { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
+    .logo-wrap img:last-child { height: 46px; border-radius: 6px; object-fit: contain; background: black; }
+    .logo-fallback {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px; letter-spacing: 5px; color: #fff;
+    }
 
-.logo-badge {
-  width: 50px;
-  height: 50px;
-  background-color: blue;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: var(--border-radius-lg);
-  margin-top: 10px;
-  margin-left: 10px;
-  color: var(--color-white);
-  font-weight: bold;
-}
+    .menu-btn {
+      display: flex; align-items: center; gap: 10px;
+      background: none;
+      border: 1.5px solid #2a2a2a; color: #777;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      padding: 10px 20px; border-radius: 30px;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .menu-btn:hover, .menu-btn.open { border-color: #fff; color: #fff; }
+    .menu-btn i { font-size: 0.9rem; transition: transform 0.35s ease; }
+    .menu-btn.open i.fa-bars { display: none; }
 
-.navbar-name {
-  font-family: var(--font-main);
-  color: var(--color-black);
-  font-size: larger;
-  margin-left: 10px;
-  align-self: center;
-}
+    .nav-dropdown {
+      position: absolute; top: calc(100% + 10px); right: 28px;
+      background: #0d0d0d; border: 1px solid #1e1e1e;
+      border-radius: 14px; overflow: hidden;
+      min-width: 240px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+      opacity: 0; transform: translateY(-8px) scale(0.97);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 999;
+    }
+    .nav-dropdown.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
 
-.navbar-right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    .nav-dropdown-header {
+      padding: 11px 22px;
+      border-bottom: 1px solid #191919;
+      font-size: 8px; letter-spacing: 5px; text-transform: uppercase; color: #2e2e2e;
+    }
+    .nav-dropdown a {
+      display: flex; align-items: center; gap: 14px;
+      padding: 13px 22px;
+      color: #555; text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      border-bottom: 1px solid #111;
+      transition: all 0.2s; position: relative;
+    }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a::before {
+      content:''; position:absolute; left:0; top:0; bottom:0;
+      width:0; background:#fff; transition:width 0.2s ease;
+    }
+    .nav-dropdown a:hover::before { width: 2px; }
+    .nav-dropdown a:hover { background: rgba(255,255,255,0.04); color: #fff; padding-left: 28px; }
+    .nav-icon {
+      width: 30px; height: 30px; background: #111;
+      border: 1px solid #1f1f1f; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .nav-icon i { color: #444; font-size: 0.7rem; transition: color 0.2s; }
+    .nav-dropdown a:hover .nav-icon { border-color: #333; }
+    .nav-dropdown a:hover .nav-icon i { color: #fff; }
+    .nav-dropdown .cta-link {
+      background: rgba(255,255,255,0.04); color: #fff !important;
+      justify-content: center; letter-spacing: 3px;
+    }
+    .nav-dropdown .cta-link:hover { background: #fff !important; color: #000 !important; padding-left: 22px !important; }
+    .nav-dropdown .cta-link::before { display: none; }
 
-.nav-links {
-  list-style: none;
-  color: var(--color-black);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: var(--font-main);
-  gap: 40px;
-  padding-right: 40px;
-}
+    /* ════════════════════════════════
+       HERO VIDEO
+    ════════════════════════════════ */
+    #accueil { padding-top: 73px; }
+    .hero-video-wrap {
+      position: relative; overflow: hidden;
+      background: #050505;
+    }
+    #accueil video {
+      width: 100%; display: block;
+      animation: videoIn 1.4s ease 0.2s both;
+    }
+    @keyframes videoIn { from{opacity:0;transform:scale(1.03)} to{opacity:1;transform:scale(1)} }
 
-.nav-links li {
-  cursor: pointer;
-  white-space: nowrap;
-}
+    /* ════════════════════════════════
+       CATÉGORIES
+    ════════════════════════════════ */
+    #accueil-categories { padding: 90px 40px 70px; }
+    .section-label {
+      text-align: center;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 7px; color: #383838;
+      text-transform: uppercase; margin-bottom: 10px;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .section-heading {
+      text-align: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px; letter-spacing: 8px; color: #fff;
+      margin-bottom: 6px;
+    }
+    .section-line { width: 40px; height: 1px; background: #fff; margin: 0 auto 52px; }
 
-/* =============================================
-   HERO SECTION
-   ============================================= */
-.hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 2px solid var(--color-black);
-  width: 99%;
-  min-height: 800px;
-  margin-top: 80px;
-  border-radius: var(--border-radius-md);
-  padding: 20px;
-}
+    .categories-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 18px; max-width: 1100px; margin: 0 auto;
+    }
+    .cat-card {
+      position: relative; overflow: hidden; border-radius: 12px;
+      cursor: pointer; border: 1px solid #1c1c1c;
+      transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s;
+      animation: fadeUp 0.7s ease both;
+    }
+    .cat-card:nth-child(1){ animation-delay: 0.1s; }
+    .cat-card:nth-child(2){ animation-delay: 0.2s; }
+    .cat-card:nth-child(3){ animation-delay: 0.3s; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+    .cat-card:hover { transform: translateY(-10px); border-color: #3a3a3a; box-shadow: 0 28px 70px rgba(255,255,255,0.07); }
+    .cat-card img { width: 100%; height: 330px; object-fit: cover; display: block; transition: transform 0.6s; }
+    .cat-card:hover img { transform: scale(1.07); }
+    .cat-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, transparent 100%);
+      padding: 50px 22px 20px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px; letter-spacing: 5px; color: #fff; text-transform: uppercase;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .cat-arrow { font-size: 11px; color: #555; transition: color 0.3s, transform 0.3s; }
+    .cat-card:hover .cat-arrow { color: #fff; transform: translateX(5px); }
 
-.hero-content {
-  flex: 1;
-  max-width: 60%;
-}
+    /* ════════════════════════════════
+       DIVIDER
+    ════════════════════════════════ */
+    .divider { width: 100%; height: 1px; background: #131313; }
 
-/* Badge bouton haut */
-.badge-btn {
-  width: 220px;
-  margin-left: 20px;
-  border-radius: var(--border-radius-lg);
-  height: 40px;
-  border: none;
-  background-color: var(--color-bg);
-  cursor: pointer;
-  font-family: var(--font-main);
-}
+    /* ════════════════════════════════
+       PRODUITS
+    ════════════════════════════════ */
+    #produits { padding: 100px 40px 80px; }
 
-.star-icon {
-  font-size: 15px;
-  color: yellow;
-}
+    .produits-tabs {
+      display: flex; justify-content: center; gap: 10px;
+      margin-bottom: 40px; flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: none; border: 1.5px solid #2a2a2a; color: #444;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 3px;
+      padding: 10px 26px; border-radius: 30px; cursor: pointer;
+      transition: all 0.3s; text-transform: uppercase;
+    }
+    .tab-btn:hover { border-color: #666; color: #aaa; }
+    .tab-btn.actif { border-color: #fff; color: #fff; background: rgba(255,255,255,0.05); }
 
-/* Texte principal */
-.hero-title {
-  color: var(--color-primary);
-  font-size: 50px;
-  font-family: var(--font-main);
-  margin: 15px 20px;
-  line-height: 1.3;
-}
+    .color-filters {
+      display: flex; justify-content: center; gap: 8px;
+      margin-bottom: 40px; flex-wrap: wrap;
+      animation: fadeIn 0.35s ease both;
+    }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+    .color-btn {
+      background: none; border: 1px solid #222; color: #444;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+      padding: 6px 16px; border-radius: 20px; cursor: pointer;
+      transition: all 0.2s; text-transform: uppercase;
+    }
+    .color-btn:hover, .color-btn.actif { border-color: #fff; color: #fff; background: rgba(255,255,255,0.06); }
 
-.hero-subtitle {
-  font-size: 18px;
-  color: var(--color-black);
-  margin: 15px 20px;
-  font-weight: normal;
-  line-height: 1.7;
-}
+    .produits-panel { display: none; }
+    .produits-panel.actif { display: block; }
 
-/* Boutons d'action */
-.hero-actions {
-  margin-top: 20px;
-  display: flex;
-  gap: 15px;
-  margin-left: 20px;
-}
+    .prod-grille {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+      gap: 22px; max-width: 1100px; margin: 0 auto;
+    }
 
-.btn-primary {
-  width: 220px;
-  border-radius: var(--border-radius-lg);
-  height: 60px;
-  border: none;
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  font-family: var(--font-main);
-  font-size: larger;
-  cursor: pointer;
-}
+    .carte {
+      background: #080808; border: 1px solid #1a1a1a; border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
+      animation: cardUp 0.5s ease both;
+    }
+    .carte:hover { transform: translateY(-10px); border-color: #333; box-shadow: 0 24px 60px rgba(255,255,255,0.07); }
+    @keyframes cardUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
 
-.btn-secondary {
-  width: 220px;
-  border-radius: var(--border-radius-lg);
-  height: 60px;
-  border: 2px solid var(--color-primary);
-  background-color: transparent;
-  color: var(--color-primary);
-  font-family: var(--font-main);
-  font-size: larger;
-  cursor: pointer;
-}
+    .carte-img {
+      width: 100%; aspect-ratio: 1/1; overflow: hidden;
+      background: #0d0d0d; position: relative;
+    }
+    .carte-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.55s; }
+    .carte:hover .carte-img img { transform: scale(1.08); }
+    .badge {
+      position: absolute; top: 10px; right: 10px;
+      font-size: 8px; font-weight: 700; letter-spacing: 2.5px;
+      padding: 4px 11px; border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.2); color: #fff;
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
+      font-family: 'Cormorant Garamond', serif; text-transform: uppercase;
+    }
 
-/* Stats */
-.hero-stats {
-  display: flex;
-  gap: 15px;
-  margin-top: 20px;
-  margin-left: 20px;
-}
+    .carte-body { padding: 18px 20px 22px; }
+    .carte-nom {
+      font-family: 'Bebas Neue', sans-serif;
+      color: #fff; font-size: 16px; letter-spacing: 2px; margin-bottom: 6px;
+    }
+    .carte-desc { color: #3a3a3a; font-size: 12px; margin-bottom: 16px; line-height: 1.7; }
 
-.stat-card {
-  width: 220px;
-  border-radius: var(--border-radius-lg);
-  min-height: 80px;
-  border: var(--border-std);
-  font-family: var(--font-main);
-  color: var(--color-primary);
-  font-size: larger;
-  text-align: center;
-  background-color: var(--color-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-}
+    .tailles { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+    .taille {
+      min-width: 30px; height: 30px; padding: 0 8px;
+      border: 1px solid #222; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; color: #3a3a3a;
+      font-family: 'Cormorant Garamond', serif;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .taille:hover { border-color: #555; color: #888; }
+    .taille.sel { border-color: #fff; color: #fff; }
 
-.stat-card p {
-  margin: 0;
-  line-height: 1.4;
-}
+    .carte-footer { display: flex; align-items: center; justify-content: space-between; }
+    .carte-prix { color: #fff; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; }
+    .btn-cmd {
+      background: #fff; color: #000; border: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      padding: 10px 18px; border-radius: 8px; cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-cmd:hover { background: #ddd; transform: scale(1.04); }
 
-/* Partie visuelle droite */
-.hero-visual {
-  width: 500px;
-  border: var(--border-std);
-  margin-right: 20px;
-  height: 300px;
-  border-radius: var(--border-radius-md);
-  position: relative;
-  flex-shrink: 0;
-  background-image: url(data:image/jpeg;base64,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);
-background-repeat: no-repeat;
-background-size: cover;
-}
+    /* ════════════════════════════════
+       MODAL COMMANDE
+    ════════════════════════════════ */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88); backdrop-filter: blur(10px);
+      z-index: 2000; display: none;
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #0a0a0a; border: 1px solid #202020;
+      border-radius: 20px; width: 100%; max-width: 540px;
+      max-height: 90vh; overflow-y: auto;
+      animation: modalIn 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    @keyframes modalIn { from{opacity:0;transform:scale(0.94) translateY(24px)} to{opacity:1;transform:scale(1) translateY(0)} }
 
-.hero-visual-card {
-  width: 200px;
-  height: 70px;
-  display: flex;
-  border-radius: var(--border-radius-md);
-  border: var(--border-std);
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 8px;
-}
+    .modal-header {
+      padding: 28px 32px 20px; border-bottom: 1px solid #181818;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-header h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px; letter-spacing: 4px; text-transform: uppercase;
+    }
+    .modal-close {
+      background: none; border: 1px solid #222; color: #444;
+      width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .modal-close:hover { border-color: #fff; color: #fff; }
 
-.visual-title {
-  color: var(--color-primary);
-  font-size: 14px;
-  font-family: var(--font-main);
-}
+    .modal-produit-info {
+      padding: 18px 32px; background: #060606;
+      border-bottom: 1px solid #111;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .modal-produit-icon {
+      width: 52px; height: 52px; background: #0f0f0f;
+      border: 1px solid #1f1f1f; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; flex-shrink: 0;
+    }
+    .modal-produit-nom {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px; letter-spacing: 2px; margin-bottom: 4px;
+    }
+    .modal-produit-prix { color: #555; font-size: 13px; }
 
-.visual-subtitle {
-  color: var(--color-gray);
-  font-size: 12px;
-  font-weight: normal;
-}
+    .modal-body { padding: 24px 32px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; font-size: 9px; font-weight: 700;
+      letter-spacing: 3px; color: #444; text-transform: uppercase;
+      margin-bottom: 8px; font-family: 'Cormorant Garamond', serif;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; background: #050505;
+      border: 1.5px solid #1a1a1a; color: #bbb;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px; padding: 12px 16px; border-radius: 10px;
+      transition: border-color 0.3s; outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: #444; }
+    .form-group select option { background: #0a0a0a; }
+    .form-group textarea { resize: vertical; min-height: 72px; }
 
-.hero-visual-accent {
-  width: 100px;
-  height: 50px;
-  border-radius: var(--border-radius-md);
-  border: var(--border-std);
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
-/* =============================================
-   SECTION LABEL (titre centré)
-   ============================================= */
-.section-label {
-  width: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  height: 30px;
-  border: var(--border-std);
-  margin: 20px auto 0 auto;
-  margin-left: 550px;
-  color: var(--color-black);
-  border-radius: var(--border-radius-sm);
-  font-family: var(--font-main);
-}
+    .tailles-modal { display: flex; gap: 8px; flex-wrap: wrap; }
+    .taille-opt {
+      padding: 8px 16px; border: 1.5px solid #1e1e1e;
+      border-radius: 8px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; color: #3a3a3a;
+      cursor: pointer; transition: all 0.2s; text-transform: uppercase;
+    }
+    .taille-opt:hover { border-color: #555; color: #888; }
+    .taille-opt.sel { border-color: #fff; color: #fff; background: rgba(255,255,255,0.05); }
 
-/* =============================================
-   A PROPOS
-   ============================================= */
-.about-grid {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 20px;
-  padding: 0 100px;
-  gap: 30px;
-}
+    .total-row {
+      background: #060606; border: 1px solid #181818;
+      border-radius: 10px; padding: 14px 18px;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 4px;
+    }
+    .total-label { font-size: 9px; font-weight: 700; letter-spacing: 3px; color: #444; text-transform: uppercase; }
+    .total-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px; letter-spacing: 2px; color: #fff;
+    }
 
-.about-card {
-  width: 450px;
-  min-height: 200px;
-  border: var(--border-std);
-  border-radius: var(--border-radius-md);
-  padding: 20px;
-}
+    .modal-footer {
+      padding: 18px 32px; border-top: 1px solid #181818;
+      display: flex; gap: 10px;
+    }
+    .btn-submit {
+      flex: 1; background: #fff; color: #000; border: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      padding: 14px; border-radius: 10px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-submit:hover { background: #e0e0e0; }
+    .btn-cancel {
+      background: none; border: 1.5px solid #1e1e1e; color: #444;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      padding: 14px 20px; border-radius: 10px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-cancel:hover { border-color: #555; color: #888; }
 
-.card-title {
-  color: var(--color-primary);
-  margin-bottom: 15px;
-  font-family: var(--font-main);
-}
+    /* ════════════════════════════════
+       À PROPOS
+    ════════════════════════════════ */
+    #apropos { padding: 100px 40px; }
+    .apropos-inner {
+      max-width: 940px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 70px; align-items: center;
+    }
+    .apropos-text h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px; letter-spacing: 5px; margin-bottom: 22px; line-height: 1;
+    }
+    .apropos-text h2 span { color: #2a2a2a; }
+    .apropos-text p { color: #555; font-size: 15px; line-height: 2; margin-bottom: 16px; }
+    .apropos-text p strong { color: #999; }
+    .apropos-img {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid #1a1a1a; transition: transform 0.45s;
+    }
+    .apropos-img:hover { transform: scale(1.02); }
+    .apropos-img img { width: 100%; display: block; }
 
-.card-text {
-  color: var(--color-black);
-  line-height: 1.6;
-}
+    .apropos-values {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 18px; max-width: 940px; margin: 60px auto 0;
+    }
+    .val-card {
+      background: #080808; border: 1px solid #161616;
+      border-radius: 12px; padding: 30px 22px; text-align: center;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .val-card:hover { transform: translateY(-6px); border-color: #2a2a2a; }
+    .val-card i { font-size: 24px; color: #404040; margin-bottom: 16px; display: block; }
+    .val-card h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px; letter-spacing: 4px; margin-bottom: 10px;
+    }
+    .val-card p { font-size: 12px; color: #444; line-height: 1.8; }
 
-/* =============================================
-   PROJETS
-   ============================================= */
+    /* ════════════════════════════════
+       NEWSLETTER
+    ════════════════════════════════ */
+    .newsletter {
+      text-align: center; padding: 90px 40px;
+      border-top: 1px solid #111; border-bottom: 1px solid #111;
+      background: #030303;
+    }
+    .newsletter i { font-size: 42px; color: #2a2a2a; margin-bottom: 18px; display: block; }
+    .newsletter h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 34px; letter-spacing: 8px; margin-bottom: 12px;
+    }
+    .newsletter p { color: #444; font-size: 14px; margin-bottom: 32px; }
+    .newsletter-form { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .newsletter-form input {
+      width: 380px; padding: 13px 22px;
+      background: #0a0a0a; border: 1.5px solid #222; color: #aaa;
+      font-family: 'Cormorant Garamond', serif; font-size: 13px;
+      border-radius: 30px; transition: border-color 0.3s;
+    }
+    .newsletter-form input:focus { outline: none; border-color: #555; }
+    .newsletter-form button {
+      background: #fff; color: #000; border: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 3px;
+      padding: 13px 28px; border-radius: 30px; cursor: pointer;
+      transition: all 0.2s; text-transform: uppercase;
+    }
+    .newsletter-form button:hover { background: #ddd; transform: scale(1.04); }
 
+    /* ════════════════════════════════
+       CONTACT
+    ════════════════════════════════ */
+    #contact { padding: 100px 40px 80px; }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: start;
+      max-width: 960px; margin: 0 auto;
+    }
+    .contact-info h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30px; letter-spacing: 4px; margin-bottom: 28px;
+    }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      margin-bottom: 16px; padding: 18px 20px;
+      background: #080808; border: 1px solid #161616;
+      border-radius: 12px; transition: border-color 0.3s;
+    }
+    .contact-item:hover { border-color: #2a2a2a; }
+    .contact-item-icon {
+      width: 38px; height: 38px; background: #0f0f0f;
+      border: 1px solid #1f1f1f; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .contact-item-icon i { color: #404040; font-size: 13px; }
+    .contact-item-label { font-size: 9px; font-weight: 700; letter-spacing: 3px; color: #333; text-transform: uppercase; margin-bottom: 4px; }
+    .contact-item-value { font-size: 14px; color: #777; }
 
-/* =============================================
-   PROFIL
-   ============================================= */
-.profile-grid {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-  gap: 20px;
-  padding: 0 10px;
-}
+    .footer-socials { display: flex; gap: 10px; margin-top: 24px; }
+    .social-btn {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: #0f0f0f; border: 1px solid #1c1c1c;
+      display: flex; align-items: center; justify-content: center;
+      color: #555; font-size: 15px; text-decoration: none;
+      transition: all 0.25s;
+    }
+    .social-btn:hover { background: #fff; color: #000; transform: scale(1.12) rotate(4deg); border-color: #fff; }
 
-.profile-card {
-  width: 10px;
-  height: 100px;
-  border: var(--border-std);
-  border-radius: var(--border-radius-md);
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    .contact-form-wrap {
+      background: #070707; border: 1px solid #191919;
+      border-radius: 16px; padding: 34px;
+    }
+    .contact-form-wrap h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px; letter-spacing: 4px; margin-bottom: 26px;
+    }
 
-/* =============================================
-   CONTACT BANNER
-   ============================================= */
-.contact-banner {
-  width: 50%;
-  height: 250px;
-  border: var(--border-std);
-  border-radius: var(--border-radius-md);
-  margin: 0 auto;
-  margin-left: 330px;
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    footer { background: #040404; border-top: 1px solid #111; padding: 80px 40px 0; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
 
-/* ===== PROJETS ===== */
-.projets-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-top: 2px solid black;
-  border-left: 2px solid black;
-  margin-top: 20px;
-}
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 50px; margin-bottom: 60px;
+    }
+    .footer-brand img { height: 56px; margin-bottom: 18px; display: block; border-radius: 8px; }
+    .footer-brand p { font-size: 13px; color: #383838; line-height: 2; margin-bottom: 22px; }
+    .footer-col h5 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px; letter-spacing: 4px; color: #2e2e2e;
+      text-transform: uppercase; margin-bottom: 20px;
+      padding-bottom: 10px; border-bottom: 1px solid #0f0f0f;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 13px; }
+    .footer-col ul li a {
+      color: #333; font-size: 13px; text-decoration: none;
+      letter-spacing: 1px; transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: #fff; }
 
-.projet-card {
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
-  overflow: hidden;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+    .footer-contact-item i { font-size: 13px; color: #333; margin-top: 3px; }
+    .footer-contact-item span { font-size: 13px; color: #333; line-height: 1.6; }
 
-.projet-card:hover { opacity: 0.85; }
+    .footer-paiements { margin-top: 10px; }
+    .footer-paiements h5 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 12px; letter-spacing: 4px; color: #2a2a2a;
+      margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #0f0f0f;
+    }
+    .pay-logos { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .pay-logos img {
+      height: 34px; object-fit: contain;
+      background: #0f0f0f; border-radius: 7px; padding: 4px 8px;
+      border: 1px solid #1a1a1a;
+    }
 
-.projet-card img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  display: block;
-}
+    .footer-grid-slim {
+      display: flex;
+      justify-content: center;
+      gap: 120px;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+    }
 
-.projet-body {
-  padding: 12px 14px 16px;
-  background-color: white;
-}
+    .footer-bottom {
+      border-top: 1px solid #0f0f0f; padding: 28px 0;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 14px;
+    }
+    .footer-copy { font-size: 11px; color: #2a2a2a; letter-spacing: 2px; }
 
-.projet-titre {
-  font-family: var(--font-main);
-  font-size: 14px;
-  color: var(--color-black);
-  margin-bottom: 6px;
-}
+    .footer-banner {
+      background: #fff; color: #000; text-align: center;
+      padding: 22px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px; letter-spacing: 12px; margin-top: 0;
+    }
 
-.projet-desc {
-  font-size: 12px;
-  color: var(--color-gray);
-  line-height: 1.6;
-} </style>
+    /* ════════════════════════════════
+       TOAST
+    ════════════════════════════════ */
+    .toast {
+      position: fixed; bottom: 28px; right: 28px;
+      background: #0d0d0d; border: 1px solid #222;
+      border-radius: 12px; padding: 15px 22px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px; letter-spacing: 1px;
+      z-index: 9999; transform: translateY(80px); opacity: 0;
+      transition: all 0.4s; display: flex; align-items: center; gap: 10px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { border-color: #1e3a1e; color: #6fcf97; }
+    .toast.error { border-color: #3a1e1e; color: #eb5757; }
+
+    /* ════════════════════════════════
+       SCROLL REVEAL
+    ════════════════════════════════ */
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ════════════════════════════════
+       MOBILE
+    ════════════════════════════════ */
+    @media (max-width: 768px) {
+      .categories-grid { grid-template-columns: 1fr; }
+      .apropos-inner { grid-template-columns: 1fr; }
+      .apropos-values { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .prod-grille { grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); }
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-dropdown { right: 16px; min-width: 210px; }
+      .menu-btn span { display: none; }
+      .section-heading { font-size: 38px; }
+    }
+  </style>
 </head>
-<body >
+<body>
 
-    <!-- NAVBAR -->.;'
-    
-    <nav class="navbar">
-        <div class="navbar-left">
-            <div class="logo-badge">LD</div>
-            <p class="navbar-name">LAMINE DIOUF</p>
-            <br>
-           
-        </div>
-        <div class="navbar-right">
-            <ul class="nav-links">
-                <li>Accueil</li>
-                <li>A propos</li>
-                <li>Projets</li>
-                <li>Profil</li>
-                <li>Contact</li>
-            </ul>
-        </div>
-    </nav>
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="logo-wrap" href="#accueil">
+      <img src="BIGDREAM LOGO.jpeg" alt="Logo"
+           onerror="this.style.display='none'">
+      <img src="bigdream ecriture.jpeg" alt="BIGDREAM"
+           onerror="this.outerHTML='<span class=\'logo-fallback\'>BIGDREAM</span>'">
+    </a>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="hero-content">
-            <button class="badge-btn">
-                <i class="fa-solid fa-star star-icon"></i> portfolio moderne &amp; evolutif
-            </button>
-            <div class="hero-text">
-                <h1 class="hero-title">Construire <br> mon parcours <br> avec passion, <br> creativite et <br> ambition</h1>
-                <h5 class="hero-subtitle">
-                    Bonjour, je suis Lamine Diouf, etudiant passionne d'informatique.<br>
-                    l'apprentissage et la creation d'interfaces modernes. Je developpe<br>
-                    progressivement mon univers academique et personnel a travers des<br>
-                    projets concrets, simples et soignes.
-                </h5>
-            </div>
-            <div class="hero-actions">
-                <button class="btn-primary">Voir mes projets</button>
-                <button class="btn-secondary">Me contacter</button>
-            </div>
-            <div class="hero-stats">
-                <div class="stat-card">
-                    <strong><p>5+<br>projets realises</p></strong>
-                </div>
-                <div class="stat-card">
-                    <strong><p>50%<br>modelisations et progression</p></strong>
-                </div>
-                <div class="stat-card">
-                    <strong><p>UI<br>Design & web moderne</p></strong>
-                </div>
-            </div>
-        </div>
-        <div class="hero-visual">
-             
-            <div class="hero-visual-card">
-                <h4 class="visual-title">CREATIVITE<br><span class="visual-subtitle">idees carres et visibles</span></h4>
-            </div>
-            <div class="hero-visual-accent">APPRENTISSAGE<span class="visual-subtitle">evolution continu</span></h4>
-               
-            </div>
-        </div>
-    </section>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false">
+      <i class="fa-solid fa-bars" id="menuIcon"></i>
+      <span>Menu</span>
+    </button>
 
-    <br><br><br><br>
-
-    <!-- A PROPOS -->
-    <div class="section-label">
-        <strong>A PROPOS DE MOI</strong>
+    <div class="nav-dropdown" id="navDropdown">
+      <div class="nav-dropdown-header">Navigation</div>
+      <a href="#accueil">
+        <div class="nav-icon"><i class="fa-solid fa-house"></i></div>Accueil
+      </a>
+      <a href="#produits">
+        <div class="nav-icon"><i class="fa-solid fa-shirt"></i></div>Produits
+      </a>
+      <a href="#apropos">
+        <div class="nav-icon"><i class="fa-solid fa-circle-info"></i></div>À Propos
+      </a>
+      <a href="#contact" class="cta-link">
+        <i class="fa-solid fa-paper-plane" style="margin-right:8px"></i>Contact
+      </a>
     </div>
+  </div>
+</nav>
 
-    <br><br><br><br>
+<!-- ══════════════ HERO ══════════════ -->
+<section id="accueil">
+  <div class="hero-video-wrap">
+    <video autoplay muted loop playsinline preload="auto" poster="image.jpg">
+      <source src="BIGDREAMvideo.mp4" type="video/mp4"/>
+    </video>
+  </div>
 
-    <div class="about-grid">
-        <div class="about-card">
-            <h3 class="card-title">Mon parcours</h3>
-            <p class="card-text">Je suis une étudiant curieux et motivé, avec un fort intérêt pour les outils
-numériques, le web et la communication visuelle. J'aime apprendre en
-pratiquant, construire de petits projets concrets et améliorer progressivement
-mes compétences.</p>
-        </div>
-        <div class="about-card">
-            <h3 class="card-title">Mes objectifs</h3>
-            <p class="card-text">Mon objectif est de développer un profil solide, capable de relier connaissances
-académiques, créativité personnelle et compétences techniques. Je souhaite
-bâtir un portfolio clair, sérieux et évolutif.</p>
-        </div>
+  <!-- Catégories -->
+  <div id="accueil-categories" class="reveal">
+    <p class="section-label">Collection 2026</p>
+    <h2 class="section-heading">CATÉGORIES</h2>
+    <div class="section-line"></div>
+    <div class="categories-grid">
+      <div class="cat-card" onclick="scrollToTab('tshirt')">
+        <img src="tee-shirt bigdream.jpeg" alt="Tee-Shirts"
+             onerror="this.style.background='#111'">
+        <div class="cat-label">TEE-SHIRTS <span class="cat-arrow"><i class="fa-solid fa-arrow-right"></i></span></div>
+      </div>
+      <div class="cat-card" onclick="scrollToTab('bonnet')">
+        <img src="bonnet_fond_blanc (1).jpeg" alt="Bonnets"
+             onerror="this.style.background='#111'">
+        <div class="cat-label">BONNETS <span class="cat-arrow"><i class="fa-solid fa-arrow-right"></i></span></div>
+      </div>
+      <div class="cat-card" onclick="scrollToTab('collant')">
+        <img src="collant bigdream.jpeg" alt="Collants"
+             onerror="this.style.background='#111'">
+        <div class="cat-label">COLLANTS <span class="cat-arrow"><i class="fa-solid fa-arrow-right"></i></span></div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <br><br>
+<div class="divider"></div>
 
-    <div class="about-grid">
-        <div class="about-card">
-            <h3 class="card-title">Mes qualites</h3>
-            <p class="card-text">Je suis organisé, persévérent, attentif aux détails et toujours prêt à
-apprendre. J'aime les interfaces bien structurées, les contenues lisible et les
-réalisations simples mais soignées.</p>
+<!-- ══════════════ PRODUITS ══════════════ -->
+<section id="produits">
+  <p class="section-label reveal">Shop</p>
+  <h2 class="section-heading reveal">NOS PRODUITS</h2>
+  <div class="section-line"></div>
+
+  <div class="produits-tabs">
+    <button class="tab-btn actif" onclick="ouvrirTab('tshirt',this)">TEE-SHIRTS</button>
+    <button class="tab-btn" onclick="ouvrirTab('bonnet',this)">BONNETS</button>
+    <button class="tab-btn" onclick="ouvrirTab('collant',this)">COLLANTS</button>
+  </div>
+
+  <!-- Filtres couleur -->
+  <div class="color-filters" id="cf-tshirt">
+    <button class="color-btn actif" onclick="filtrer('tshirt','tous',this)">TOUS</button>
+    <button class="color-btn" onclick="filtrer('tshirt','blanc',this)">BLANC</button>
+    <button class="color-btn" onclick="filtrer('tshirt','noir',this)">NOIR</button>
+    <button class="color-btn" onclick="filtrer('tshirt','gris',this)">GRIS</button>
+  </div>
+  <div class="color-filters" id="cf-bonnet" style="display:none">
+    <button class="color-btn actif" onclick="filtrer('bonnet','tous',this)">TOUS</button>
+    <button class="color-btn" onclick="filtrer('bonnet','blanc',this)">BLANC</button>
+    <button class="color-btn" onclick="filtrer('bonnet','noir',this)">NOIR</button>
+    <button class="color-btn" onclick="filtrer('bonnet','gris',this)">GRIS</button>
+  </div>
+  <div class="color-filters" id="cf-collant" style="display:none">
+    <button class="color-btn actif" onclick="filtrer('collant','tous',this)">TOUS</button>
+    <button class="color-btn" onclick="filtrer('collant','blanc',this)">BLANC</button>
+    <button class="color-btn" onclick="filtrer('collant','noir',this)">NOIR</button>
+    <button class="color-btn" onclick="filtrer('collant','gris',this)">GRIS</button>
+  </div>
+
+  <!-- TEE-SHIRTS -->
+  <div class="produits-panel actif" id="panel-tshirt">
+    <div class="prod-grille" id="grille-tshirt">
+
+      <div class="carte" data-couleur="blanc"
+           data-id="tshirt-blanc" data-nom="Tee-shirt BIGDREAM — Blanc"
+           data-prix="12000" data-icon="👕" data-tailles="XS,S,M,L,XL">
+        <div class="carte-img">
+          <img src="tee-shirt bigdream.jpeg" alt="Tee-shirt Blanc">
+          <span class="badge">BLANC</span>
         </div>
-        <div class="about-card">
-            <h3 class="card-title">Ce que je recherche</h3>
-            <p class="card-text">Je recherche des opportunités d'apprentissage, des collaborations
-académiques et des expériences qui me permettront de progresser dans le
-développement web, le design et la valorisation de projets personnels.</p>
+        <div class="carte-body">
+          <p class="carte-nom">TEE-SHIRT BIGDREAM — BLANC</p>
+          <p class="carte-desc">100% coton premium · Coupe oversize · Logo brodé</p>
+          <div class="tailles"><div class="taille">XS</div><div class="taille">S</div><div class="taille">M</div><div class="taille">L</div><div class="taille">XL</div></div>
+          <div class="carte-footer">
+            <span class="carte-prix">12 000 F</span>
+            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <br><br><br><br>
+      <div class="carte" data-couleur="noir"
+           data-id="tshirt-noir" data-nom="Tee-shirt BIGDREAM — Noir"
+           data-prix="12000" data-icon="👕" data-tailles="XS,S,M,L,XL">
+        <div class="carte-img">
+          <img src="tee-shirt bigdream.jpeg" alt="Tee-shirt Noir">
+          <span class="badge">NOIR</span>
+        </div>
+        <div class="carte-body">
+          <p class="carte-nom">TEE-SHIRT BIGDREAM — NOIR</p>
+          <p class="carte-desc">100% coton premium · Coupe oversize · Logo brodé</p>
+          <div class="tailles"><div class="taille">XS</div><div class="taille">S</div><div class="taille">M</div><div class="taille">L</div><div class="taille">XL</div></div>
+          <div class="carte-footer">
+            <span class="carte-prix">12 000 F</span>
+            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
+          </div>
+        </div>
+      </div>
 
-    <!-- PROJETS -->
-     <!-- ===== PROJETS ===== -->
-<div class="section-label" style="margin-left: auto; margin-right: auto;"> <strong>MES PROJETS</strong> </div>
+      <div class="carte" data-couleur="gris"
+           data-id="tshirt-gris" data-nom="Tee-shirt BIGDREAM — Gris"
+           data-prix="12000" data-icon="👕" data-tailles="XS,S,M,L,XL">
+        <div class="carte-img">
+          <img src="tee-shirt bigdream.jpeg" alt="Tee-shirt Gris">
+          <span class="badge">GRIS</span>
+        </div>
+        <div class="carte-body">
+          <p class="carte-nom">TEE-SHIRT BIGDREAM — GRIS</p>
+          <p class="carte-desc">100% coton premium · Coupe oversize · Logo brodé</p>
+          <div class="tailles"><div class="taille">XS</div><div class="taille">S</div><div class="taille">M</div><div class="taille">L</div><div class="taille">XL</div></div>
+          <div class="carte-footer">
+            <span class="carte-prix">12 000 F</span>
+            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
+          </div>
+        </div>
+      </div>
 
-<div class="projets-grid">
-
-  <div class="projet-card">
-    <img src="image 1.jpg" alt="Mini site vitrine">
-    <div class="projet-body">
-      <h3 class="projet-titre"> <strong>  Mini site vitrine</strong></h3>
-      <p class="projet-desc"> <strong>Réalisation d'un site simple, responsive et élégant pour présenter une activité, un service ou une identité personnelle. </strong></p>
     </div>
   </div>
 
-  <div class="projet-card">
-    <img src="image 2.jpg" alt="Interface web">
-    <div class="projet-body">
-      <h3 class="projet-titre">Interface web</h3>
-      <p class="projet-desc"> <strong> d'un site simple, responsive et élégant pour présenter une activité, un service ou une identité personnelle.</strong></p>
+  <!-- BONNETS -->
+  <div class="produits-panel" id="panel-bonnet">
+    <div class="prod-grille" id="grille-bonnet">
+
+      <div class="carte" data-couleur="blanc"
+           data-id="bonnet-blanc" data-nom="Bonnet BIGDREAM — Blanc"
+           data-prix="8000" data-icon="🧢" data-tailles="S/M,M/L,L/XL">
+        <div class="carte-img">
+          <img src="bonnet_fond_blanc (1).jpeg" alt="Bonnet Blanc">
+          <span class="badge">BLANC</span>
+        </div>
+        <div class="carte-body">
+          <p class="carte-nom">BONNET BIGDREAM — BLANC</p>
+          <p class="carte-desc">Acrylique doux · Taille unique · Logo brodé frontal</p>
+          <div class="tailles"><div class="taille">S/M</div><div class="taille">M/L</div><div class="taille">L/XL</div></div>
+          <div class="carte-footer">
+            <span class="carte-prix">8 000 F</span>
+            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carte" data-couleur="noir"
+           data-id="bonnet-noir" data-nom="Bonnet BIGDREAM — Noir"
+           data-prix="8000" data-icon="🧢" data-tailles="S/M,M/L,L/XL">
+        <div class="carte-img">
+          <img src="bonnet_fond_blanc (1).jpeg" alt="Bonnet Noir">
+          <span class="badge">NOIR</span>
+        </div>
+        <div class="carte-body">
+          <p class="carte-nom">BONNET BIGDREAM — NOIR</p>
+          <p class="carte-desc">Laine mélangée · Logo script cursive · Revers doux</p>
+          <div class="tailles"><div class="taille">S/M</div><div class="taille">M/L</div><div class="taille">L/XL</div></div>
+          <div class="carte-footer">
+            <span class="carte-prix">8 000 F</span>
+            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carte" data-couleur="gris"
+           data-id="bonnet-gris" data-nom="Bonnet BIGDREAM — Gris"
+           data-prix="8000" data-icon="🧢" data-tailles="S/M,M/L,L/XL">
+        <div class="carte-img">
+          <img src="bonnet_fond_blanc (1).jpeg" alt="Bonnet Gris">
+          <span class="badge">GRIS</span>
+        </div>
+        <div class="carte-body">
+          <p class="carte-nom">BONNET BIGDREAM — GRIS</p>
+          <p class="carte-desc">Acrylique doux · Taille unique · Logo brodé frontal</p>
+          <div class="tailles"><div class="taille">S/M</div><div class="taille">M/L</div><div class="taille">L/XL</div></div>
+          <div class="carte-footer">
+            <span class="carte-prix">8 000 F</span>
+            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <div class="projet-card">
-    <img src="image 3.jpg" alt="Projet JavaScript">
-    <div class="projet-body">
-      <h3 class="projet-titre">Projet JavaScript</h3>
-      <p class="projet-desc"> <strong>Réalisation d'un site simple, responsive et élégant pour présenter une activité, un service ou une identité personnelle. </strong></p>
+  <!-- COLLANTS -->
+  <div class="produits-panel" id="panel-collant">
+    <div class="prod-grille" id="grille-collant">
+
+      <div class="carte" data-couleur="noir"
+           data-id="collant-noir" data-nom="Collant BIGDREAM — Noir"
+           data-prix="10000" data-icon="🩱" data-tailles="XS,S,M,L,XL">
+        <div class="carte-img">
+          <img src="collant bigdream.jpeg" alt="Collant Noir">
+          <span class="badge">NOIR</span>
+        </div>
+        <div class="carte-body">
+          <p class="carte-nom">COLLANT BIGDREAM — NOIR</p>
+          <p class="carte-desc">Polyester stretch · Coupe ajustée · Logo imprimé cuisse</p>
+          <div class="tailles"><div class="taille">XS</div><div class="taille">S</div><div class="taille">M</div><div class="taille">L</div><div class="taille">XL</div></div>
+          <div class="carte-footer">
+            <span class="carte-prix">10 000 F</span>
+            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carte" data-couleur="gris"
+           data-id="collant-gris" data-nom="Collant BIGDREAM — Gris"
+           data-prix="10000" data-icon="🩱" data-tailles="XS,S,M,L,XL">
+        <div class="carte-img">
+          <img src="collant bigdream.jpeg" alt="Collant Gris">
+          <span class="badge">GRIS</span>
+        </div>
+        <div class="carte-body">
+          <p class="carte-nom">COLLANT BIGDREAM — GRIS</p>
+          <p class="carte-desc">Polyester stretch · Coupe ajustée · Logo imprimé cuisse</p>
+          <div class="tailles"><div class="taille">XS</div><div class="taille">S</div><div class="taille">M</div><div class="taille">L</div><div class="taille">XL</div></div>
+          <div class="carte-footer">
+            <span class="carte-prix">10 000 F</span>
+            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carte" data-couleur="blanc"
+           data-id="collant-blanc" data-nom="Collant BIGDREAM — Blanc"
+           data-prix="10000" data-icon="🩱" data-tailles="XS,S,M,L,XL">
+        <div class="carte-img">
+          <img src="collant bigdream.jpeg" alt="Collant Blanc">
+          <span class="badge">BLANC</span>
+        </div>
+        <div class="carte-body">
+          <p class="carte-nom">COLLANT BIGDREAM — BLANC</p>
+          <p class="carte-desc">Polyester stretch · Coupe ajustée · Logo imprimé cuisse</p>
+          <div class="tailles"><div class="taille">XS</div><div class="taille">S</div><div class="taille">M</div><div class="taille">L</div><div class="taille">XL</div></div>
+          <div class="carte-footer">
+            <span class="carte-prix">10 000 F</span>
+            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════ À PROPOS ══════════════ -->
+<section id="apropos">
+  <p class="section-label reveal">Notre Histoire</p>
+  <h2 class="section-heading reveal">À PROPOS</h2>
+  <div class="section-line"></div>
+
+  <div class="apropos-inner reveal">
+    <div class="apropos-text">
+      <h2>BIGDREAM<span> — DAKAR</span></h2>
+      <p>Née à Dakar, <strong>BIGDREAM</strong> est une marque de streetwear qui croit en la force des rêves. Chaque pièce que nous créons est une déclaration : celle de ne jamais s'arrêter, de toujours viser plus haut.</p>
+      <p>Notre marque est pensée pour ceux qui osent, ceux qui bougent, ceux qui construisent quelque chose de grand. Des matières premium, des coupes modernes et un style authentiquement africain.</p>
+      <p><strong>Purses your dream.</strong> Ce n'est pas juste un slogan — c'est notre raison d'être.</p>
+    </div>
+    <div class="apropos-img">
+      <img src="BIGDREAM LOGO.jpeg" alt="BIGDREAM Logo"
+           onerror="this.style.padding='80px';this.style.background='#111'">
     </div>
   </div>
 
-  <div class="projet-card">
-    <img src="image 4.jpg" alt="Travail en groupe">
-    <div class="projet-body">
-      <h3 class="projet-titre">Travail en groupe</h3>
-      <p class="projet-desc"> <strong>Réalisation d'un site simple, responsive et élégant pour présenter une activité, un service ou une identité personnelle. </strong></p>
+  <div class="apropos-values">
+    <div class="val-card reveal">
+      <i class="fa-solid fa-gem"></i>
+      <h4>QUALITÉ</h4>
+      <p>Matières soigneusement sélectionnées pour un confort et une durabilité maximaux.</p>
+    </div>
+    <div class="val-card reveal" style="transition-delay:0.12s">
+      <i class="fa-solid fa-fire"></i>
+      <h4>STYLE</h4>
+      <p>Des designs qui fusionnent l'authenticité sénégalaise avec le streetwear mondial.</p>
+    </div>
+    <div class="val-card reveal" style="transition-delay:0.24s">
+      <i class="fa-solid fa-star"></i>
+      <h4>AMBITION</h4>
+      <p>Chaque pièce est un rappel de poursuivre ses rêves sans compromis.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section id="contact">
+  <p class="section-label reveal">Nous Joindre</p>
+  <h2 class="section-heading reveal">CONTACT</h2>
+  <div class="section-line"></div>
+
+  <div class="contact-grid reveal">
+    <div class="contact-info">
+      <h3>ON EST LÀ POUR VOUS</h3>
+      <div class="contact-item">
+        <div class="contact-item-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div>
+          <p class="contact-item-label">Adresse</p>
+          <p class="contact-item-value">Dakar, Sénégal</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon"><i class="fa-solid fa-envelope"></i></div>
+        <div>
+          <p class="contact-item-label">Email</p>
+          <p class="contact-item-value">BIGDREAM@GMAIL.COM</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon"><i class="fa-brands fa-whatsapp"></i></div>
+        <div>
+          <p class="contact-item-label">WhatsApp</p>
+          <p class="contact-item-value">+221 76 933 81 43</p>
+        </div>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/bigdream_sn/" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@bigdream_000" target="_blank" class="social-btn"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://wa.me/221769338143" target="_blank" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap">
+      <h3>ENVOYER UN MESSAGE</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nom *</label>
+          <input type="text" id="c-nom" placeholder="Votre nom">
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="c-email" placeholder="votre@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Sujet</label>
+        <input type="text" id="c-sujet" placeholder="Objet de votre message">
+      </div>
+      <div class="form-group">
+        <label>Message *</label>
+        <textarea id="c-message" rows="5" placeholder="Votre message..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="envoyerContact()" style="width:100%">ENVOYER LE MESSAGE</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid-slim reveal">
+
+      <div class="footer-col">
+        <h5>Menu</h5>
+        <ul>
+          <li><a href="#accueil">Accueil</a></li>
+          <li><a href="#produits">Produits</a></li>
+          <li><a href="#apropos">À Propos</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Produits</h5>
+        <ul>
+          <li><a href="#produits" onclick="scrollToTab('tshirt')">Tee-Shirts</a></li>
+          <li><a href="#produits" onclick="scrollToTab('bonnet')">Bonnets</a></li>
+          <li><a href="#produits" onclick="scrollToTab('collant')">Collants</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 BIGDREAM — Dakar, Sénégal. Tous droits réservés.</span>
+      <span class="footer-copy">PURSES YOUR DREAM</span>
     </div>
   </div>
 
-  <div class="projet-card">
-    <img src="image 5.jpg" alt="Présentation académique">
-    <div class="projet-body">
-      <h3 class="projet-titre">Présentation académique</h3>
-      <p class="projet-desc"><strong>Réalisation d'un site simple, responsive et élégant pour présenter une activité, un service ou une identité personnelle. </strong></p>
+  <style>
+    .ticker-banner {
+      background: #fff;
+      color: #000;
+      overflow: hidden;
+      white-space: nowrap;
+      border-top: 3px solid #000;
+      padding: 18px 0;
+      position: relative;
+      cursor: default;
+    }
+    .ticker-banner::before,
+    .ticker-banner::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .ticker-banner::before {
+      left: 0;
+      background: linear-gradient(to right, #fff, transparent);
+    }
+    .ticker-banner::after {
+      right: 0;
+      background: linear-gradient(to left, #fff, transparent);
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      align-items: center;
+      gap: 32px;
+      animation: ticker 22s linear infinite;
+      will-change: transform;
+    }
+    .ticker-banner:hover .ticker-track {
+      animation-play-state: paused;
+    }
+
+    .ticker-track span {
+      font-family: 'Bebas Neue', 'Cambria', Georgia, serif;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      color: #000;
+      flex-shrink: 0;
+    }
+    .ticker-track .ticker-dot {
+      font-size: 14px;
+      letter-spacing: 0;
+      color: #888;
+      flex-shrink: 0;
+    }
+
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+  </style>
+  <!-- TICKER BANNER -->
+  <div class="ticker-banner">
+    <div class="ticker-track">
+      <span>PURSES YOUR DREAM</span>
+      <span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span>
+      <span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span>
+      <span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span>
+      <span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span>
+      <span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span>
+      <span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span>
+      <span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span>
+      <span class="ticker-dot">✦</span>
     </div>
   </div>
+</footer>
 
-  <div class="projet-card">
-    <img src="image 6.jpg" alt="Apprentissage continu">
-    <div class="projet-body">
-      <h3 class="projet-titre">Apprentissage continu</h3>
-      <p class="projet-desc"> <strong> Réalisation d'un site simple, responsive et élégant pour présenter une activité, un service ou une identité personnelle.</strong></p>
+<!-- ══════════════ MODAL COMMANDE ══════════════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>PASSER COMMANDE</h3>
+      <button class="modal-close" onclick="fermerModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-produit-info">
+      <div class="modal-produit-icon" id="modal-icon">👕</div>
+      <div>
+        <p class="modal-produit-nom" id="modal-nom">—</p>
+        <p class="modal-produit-prix" id="modal-prix">—</p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="modal-produit-id">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nom complet *</label>
+          <input type="text" id="o-nom" placeholder="Votre nom complet">
+        </div>
+        <div class="form-group">
+          <label>Téléphone *</label>
+          <input type="tel" id="o-telephone" placeholder="77 000 00 00">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email (optionnel)</label>
+        <input type="email" id="o-email" placeholder="votre@email.com">
+      </div>
+      <div class="form-group">
+        <label>Adresse de livraison *</label>
+        <input type="text" id="o-adresse" placeholder="Quartier, rue, ville...">
+      </div>
+      <div class="form-group">
+        <label>Taille *</label>
+        <div class="tailles-modal" id="modal-tailles"></div>
+      </div>
+      <div class="form-group">
+        <label>Quantité *</label>
+        <select id="o-quantite">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Note (optionnel)</label>
+        <textarea id="o-note" rows="2" placeholder="Instructions spéciales..."></textarea>
+      </div>
+      <div class="total-row">
+        <span class="total-label">Total estimé</span>
+        <span class="total-val" id="modal-total">—</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="fermerModal()">ANNULER</button>
+      <button class="btn-submit" onclick="soumettreCommande()">CONFIRMER LA COMMANDE</button>
     </div>
   </div>
 </div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fa-solid fa-circle-check" id="toast-icon"></i>
+  <span id="toast-msg"></span>
 </div>
- <br><br><br><br>
-    <!-- PROFIL -->
-    <div class="section-label">
-        <strong>MON PROFIL</strong>
-    </div>
 
-    <br><br><br><br>
+<script>
+/* ══ NAVBAR ══ */
+const menuBtn = document.getElementById('menuBtn');
+const navDropdown = document.getElementById('navDropdown');
+const menuIcon = document.getElementById('menuIcon');
 
-    <div class="profile-grid">
-        <div class="profile-card">
-             <h3 class="card-title">2026</h3>
-            <p class="card-text">Annee de progression et de consolidation </p>
-        </div>
-        <div class="profile-card"><h3 class="card-title">5+</h3><br>
-            <p class="card-text">projets d'apprentissage realises</p></div>
-        <div class="profile-card"><h3 class="card-title">100%</h3><br>
-            <p class="card-text">Motivation pour apprendre et evoluer</p></div>
-        <div class="profile-card"><h3 class="card-title">UI</h3><br>
-            <p class="card-text">interet pour le web et le design visuel</p></div>
-    </div>
+menuBtn.addEventListener('click', () => {
+  const open = navDropdown.classList.toggle('open');
+  menuBtn.classList.toggle('open', open);
+  menuIcon.className = open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+  menuBtn.setAttribute('aria-expanded', open);
+});
+document.addEventListener('click', e => {
+  if (!menuBtn.contains(e.target) && !navDropdown.contains(e.target)) {
+    navDropdown.classList.remove('open');
+    menuBtn.classList.remove('open');
+    menuIcon.className = 'fa-solid fa-bars';
+  }
+});
+navDropdown.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navDropdown.classList.remove('open');
+  menuBtn.classList.remove('open');
+  menuIcon.className = 'fa-solid fa-bars';
+}));
 
-    <br><br>
+/* ══ ONGLETS ══ */
+function ouvrirTab(tab, btn) {
+  document.querySelectorAll('.produits-panel').forEach(p => p.classList.remove('actif'));
+  document.querySelectorAll('.color-filters').forEach(f => f.style.display = 'none');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('actif'));
+  document.getElementById('panel-' + tab).classList.add('actif');
+  document.getElementById('cf-' + tab).style.display = 'flex';
+  if (btn) btn.classList.add('actif');
+  // reset filtre
+  const cf = document.getElementById('cf-' + tab);
+  cf.querySelectorAll('.color-btn').forEach(b => b.classList.remove('actif'));
+  cf.querySelector('.color-btn').classList.add('actif');
+  filtrer(tab, 'tous', cf.querySelector('.color-btn'));
+  // animation
+  document.querySelectorAll('#grille-' + tab + ' .carte').forEach((c, i) => {
+    c.style.animation = 'none';
+    setTimeout(() => {
+      c.style.animation = 'cardUp 0.45s ease both';
+      c.style.animationDelay = (0.04 + i * 0.07) + 's';
+    }, 10);
+  });
+}
 
-    <!-- CONTACT BANNER -->
-   <div  style="width: 800px; height: 200px; border: 2px solid black; margin-left: 250px; align-items: center; justify-content: center; text-align: center;">
-     <h3 class="card-title">CONTACT</h3>
-            <p class="card-text">Je suis organisé, persévérent, attentif aux détails et toujours prêt à
-apprendre. J'aime les interfaces bien structurées, les contenues lisible et les
-réalisations simples mais soignées.</p>
-  
- 
-                <button class="btn-primary">Envoyer un mail</button>
-                <button class="btn-secondary">telecharger Mon CV</button>
-            
-    </div>
+/* ══ FILTRE COULEUR ══ */
+function filtrer(cat, couleur, btn) {
+  const grille = document.getElementById('grille-' + cat);
+  if (!grille) return;
+  document.querySelectorAll('#cf-' + cat + ' .color-btn').forEach(b => b.classList.remove('actif'));
+  if (btn) btn.classList.add('actif');
+  grille.querySelectorAll('.carte').forEach((carte, i) => {
+    const match = couleur === 'tous' || carte.dataset.couleur === couleur;
+    carte.style.display = match ? 'block' : 'none';
+    if (match) {
+      carte.style.animation = 'none';
+      setTimeout(() => {
+        carte.style.animation = 'cardUp 0.4s ease both';
+        carte.style.animationDelay = (i * 0.06) + 's';
+      }, 10);
+    }
+  });
+}
 
+/* ══ CATÉGORIE → ONGLET ══ */
+function scrollToTab(tab) {
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const idx = { tshirt: 0, bonnet: 1, collant: 2 }[tab] ?? 0;
+  ouvrirTab(tab, tabBtns[idx]);
+  setTimeout(() => document.getElementById('produits').scrollIntoView({ behavior: 'smooth' }), 50);
+}
+
+/* ══ TAILLE CARTE ══ */
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('taille')) {
+    e.target.closest('.tailles').querySelectorAll('.taille').forEach(x => x.classList.remove('sel'));
+    e.target.classList.add('sel');
+  }
+});
+
+/* ══ MODAL COMMANDE ══ */
+let produitEnCours = null;
+let tailleSelectionnee = null;
+
+function ouvrirCommande(carte) {
+  produitEnCours = {
+    id: carte.dataset.id,
+    nom: carte.dataset.nom,
+    prix: parseInt(carte.dataset.prix),
+    icon: carte.dataset.icon,
+    tailles: carte.dataset.tailles.split(',')
+  };
+  tailleSelectionnee = null;
+  document.getElementById('modal-icon').textContent = produitEnCours.icon;
+  document.getElementById('modal-nom').textContent = produitEnCours.nom;
+  document.getElementById('modal-prix').textContent = produitEnCours.prix.toLocaleString('fr-FR') + ' F CFA / unité';
+  document.getElementById('modal-produit-id').value = produitEnCours.id;
+  document.getElementById('modal-total').textContent = produitEnCours.prix.toLocaleString('fr-FR') + ' F';
+
+  const cont = document.getElementById('modal-tailles');
+  cont.innerHTML = '';
+  produitEnCours.tailles.forEach(t => {
+    const d = document.createElement('div');
+    d.className = 'taille-opt';
+    d.textContent = t;
+    d.onclick = () => {
+      cont.querySelectorAll('.taille-opt').forEach(x => x.classList.remove('sel'));
+      d.classList.add('sel');
+      tailleSelectionnee = t;
+    };
+    cont.appendChild(d);
+  });
+
+  ['o-nom','o-telephone','o-email','o-adresse','o-note'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('o-quantite').value = '1';
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+document.getElementById('o-quantite').addEventListener('change', function() {
+  if (!produitEnCours) return;
+  document.getElementById('modal-total').textContent =
+    (produitEnCours.prix * parseInt(this.value)).toLocaleString('fr-FR') + ' F';
+});
+
+function fermerModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modalOverlay')) fermerModal();
+});
+
+function soumettreCommande() {
+  const nom = document.getElementById('o-nom').value.trim();
+  const telephone = document.getElementById('o-telephone').value.trim();
+  const adresse = document.getElementById('o-adresse').value.trim();
+  if (!nom || !telephone || !adresse) {
+    afficherToast('Veuillez remplir tous les champs obligatoires.', 'error');
+    return;
+  }
+  if (!tailleSelectionnee) {
+    afficherToast('Veuillez sélectionner une taille.', 'error');
+    return;
+  }
+  const qte = parseInt(document.getElementById('o-quantite').value);
+  const total = (produitEnCours.prix * qte).toLocaleString('fr-FR');
+
+  // Envoi WhatsApp avec récapitulatif
+  const msg = encodeURIComponent(
+    `🛍️ COMMANDE BIGDREAM\n\n` +
+    `Produit : ${produitEnCours.nom}\n` +
+    `Taille  : ${tailleSelectionnee}\n` +
+    `Quantité: ${qte}\n` +
+    `Total   : ${total} F CFA\n\n` +
+    `👤 Nom     : ${nom}\n` +
+    `📞 Tél     : ${telephone}\n` +
+    `📍 Adresse : ${adresse}` +
+    (document.getElementById('o-email').value ? `\n📧 Email   : ${document.getElementById('o-email').value}` : '') +
+    (document.getElementById('o-note').value ? `\n💬 Note    : ${document.getElementById('o-note').value}` : '')
+  );
+  fermerModal();
+  afficherToast('Commande confirmée ! Redirection WhatsApp...', 'success');
+  setTimeout(() => window.open('https://wa.me/221769338143?text=' + msg, '_blank'), 900);
+}
+
+/* ══ CONTACT ══ */
+function envoyerContact() {
+  const nom = document.getElementById('c-nom').value.trim();
+  const email = document.getElementById('c-email').value.trim();
+  const message = document.getElementById('c-message').value.trim();
+  if (!nom || !email || !message) {
+    afficherToast('Veuillez remplir tous les champs obligatoires.', 'error');
+    return;
+  }
+  const sujet = document.getElementById('c-sujet').value.trim();
+  const msg = encodeURIComponent(
+    `📩 MESSAGE BIGDREAM\n\n` +
+    `Nom  : ${nom}\n` +
+    `Email: ${email}\n` +
+    (sujet ? `Sujet: ${sujet}\n` : '') +
+    `\n${message}`
+  );
+  ['c-nom','c-email','c-sujet','c-message'].forEach(id => document.getElementById(id).value = '');
+  afficherToast('Message envoyé avec succès !', 'success');
+  setTimeout(() => window.open('https://wa.me/221769338143?text=' + msg, '_blank'), 900);
+}
+
+/* ══ NEWSLETTER ══ */
+function inscriptionNewsletter() {
+  const email = document.getElementById('nl-email').value.trim();
+  if (!email || !email.includes('@')) {
+    afficherToast('Veuillez entrer une adresse email valide.', 'error');
+    return;
+  }
+  document.getElementById('nl-email').value = '';
+  afficherToast('Inscription confirmée ! Bienvenue dans la famille BIGDREAM.', 'success');
+}
+
+/* ══ TOAST ══ */
+function afficherToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  const icon = document.getElementById('toast-icon');
+  document.getElementById('toast-msg').textContent = msg;
+  icon.className = type === 'success' ? 'fa-solid fa-circle-check' : 'fa-solid fa-circle-xmark';
+  t.className = 'toast ' + type + ' show';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 4200);
+}
+
+/* ══ SCROLL REVEAL ══ */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
