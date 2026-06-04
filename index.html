@@ -524,43 +524,6 @@
     footer { background: #040404; border-top: 1px solid #111; padding: 80px 40px 0; }
     .footer-inner { max-width: 1100px; margin: 0 auto; }
 
-    .footer-grid {
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 50px; margin-bottom: 60px;
-    }
-    .footer-brand img { height: 56px; margin-bottom: 18px; display: block; border-radius: 8px; }
-    .footer-brand p { font-size: 13px; color: #383838; line-height: 2; margin-bottom: 22px; }
-    .footer-col h5 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 13px; letter-spacing: 4px; color: #2e2e2e;
-      text-transform: uppercase; margin-bottom: 20px;
-      padding-bottom: 10px; border-bottom: 1px solid #0f0f0f;
-    }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 13px; }
-    .footer-col ul li a {
-      color: #333; font-size: 13px; text-decoration: none;
-      letter-spacing: 1px; transition: color 0.2s;
-    }
-    .footer-col ul li a:hover { color: #fff; }
-
-    .footer-contact-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
-    .footer-contact-item i { font-size: 13px; color: #333; margin-top: 3px; }
-    .footer-contact-item span { font-size: 13px; color: #333; line-height: 1.6; }
-
-    .footer-paiements { margin-top: 10px; }
-    .footer-paiements h5 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 12px; letter-spacing: 4px; color: #2a2a2a;
-      margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #0f0f0f;
-    }
-    .pay-logos { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .pay-logos img {
-      height: 34px; object-fit: contain;
-      background: #0f0f0f; border-radius: 7px; padding: 4px 8px;
-      border: 1px solid #1a1a1a;
-    }
-
     .footer-grid-slim {
       display: flex;
       justify-content: center;
@@ -575,13 +538,19 @@
       flex-wrap: wrap; gap: 14px;
     }
     .footer-copy { font-size: 11px; color: #2a2a2a; letter-spacing: 2px; }
-
-    .footer-banner {
-      background: #fff; color: #000; text-align: center;
-      padding: 22px;
+    .footer-col h5 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 32px; letter-spacing: 12px; margin-top: 0;
+      font-size: 13px; letter-spacing: 4px; color: #2e2e2e;
+      text-transform: uppercase; margin-bottom: 20px;
+      padding-bottom: 10px; border-bottom: 1px solid #0f0f0f;
     }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 13px; }
+    .footer-col ul li a {
+      color: #333; font-size: 13px; text-decoration: none;
+      letter-spacing: 1px; transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: #fff; }
 
     /* ════════════════════════════════
        TOAST
@@ -606,19 +575,208 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ════════════════════════════════
-       MOBILE
+       TICKER BANNER
+    ════════════════════════════════ */
+    .ticker-banner {
+      background: #fff; color: #000;
+      overflow: hidden; white-space: nowrap;
+      border-top: 3px solid #000;
+      padding: 18px 0;
+      position: relative; cursor: default;
+    }
+    .ticker-banner::before, .ticker-banner::after {
+      content: ''; position: absolute; top: 0; bottom: 0;
+      width: 80px; z-index: 2; pointer-events: none;
+    }
+    .ticker-banner::before { left: 0; background: linear-gradient(to right, #fff, transparent); }
+    .ticker-banner::after { right: 0; background: linear-gradient(to left, #fff, transparent); }
+    .ticker-track {
+      display: inline-flex; align-items: center; gap: 32px;
+      animation: ticker 22s linear infinite; will-change: transform;
+    }
+    .ticker-banner:hover .ticker-track { animation-play-state: paused; }
+    .ticker-track span {
+      font-family: 'Bebas Neue', 'Cambria', Georgia, serif;
+      font-size: 26px; font-weight: 900; letter-spacing: 8px;
+      text-transform: uppercase; color: #000; flex-shrink: 0;
+    }
+    .ticker-track .ticker-dot { font-size: 14px; letter-spacing: 0; color: #888; flex-shrink: 0; }
+    @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+    /* ════════════════════════════════
+       RESPONSIVE — TABLETTE (max 1024px)
+    ════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .nav-inner { padding: 12px 20px; }
+
+      #accueil-categories { padding: 70px 24px 50px; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .cat-card:last-child { grid-column: span 2; }
+      .cat-card img { height: 280px; }
+
+      #produits { padding: 70px 24px 60px; }
+      .prod-grille { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+      .apropos-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .apropos-text h2 { font-size: 38px; }
+      .apropos-values { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+      .contact-grid { gap: 36px; }
+      .footer-grid-slim { gap: 60px; }
+
+      #apropos { padding: 70px 24px; }
+      #contact { padding: 70px 24px 60px; }
+      footer { padding: 60px 24px 0; }
+    }
+
+    /* ════════════════════════════════
+       RESPONSIVE — MOBILE (max 768px)
     ════════════════════════════════ */
     @media (max-width: 768px) {
-      .categories-grid { grid-template-columns: 1fr; }
-      .apropos-inner { grid-template-columns: 1fr; }
-      .apropos-values { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .prod-grille { grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); }
-      .contact-grid { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      .nav-dropdown { right: 16px; min-width: 210px; }
+
+      /* ── NAVBAR ── */
+      .nav-inner { padding: 10px 16px; }
+      .logo-wrap img:last-child { height: 38px; }
+      .logo-wrap img:first-child { width: 34px; height: 34px; }
+      .menu-btn { padding: 9px 14px; font-size: 9px; }
       .menu-btn span { display: none; }
-      .section-heading { font-size: 38px; }
+      .nav-dropdown { right: 12px; min-width: 200px; }
+
+      /* ── HERO ── */
+      #accueil { padding-top: 64px; }
+      #accueil video { min-height: 260px; object-fit: cover; }
+
+      /* ── CATÉGORIES ── */
+      #accueil-categories { padding: 50px 16px 40px; }
+      .section-heading { font-size: 34px; letter-spacing: 5px; }
+      .section-label { font-size: 8px; letter-spacing: 5px; }
+
+      .categories-grid { grid-template-columns: 1fr; gap: 12px; }
+      .cat-card:last-child { grid-column: span 1; }
+      .cat-card img { height: 220px; }
+      .cat-label { font-size: 15px; letter-spacing: 3px; padding: 36px 16px 16px; }
+
+      /* ── PRODUITS ── */
+      #produits { padding: 50px 16px 50px; }
+      .produits-tabs { gap: 8px; margin-bottom: 24px; }
+      .tab-btn { font-size: 9px; padding: 9px 18px; letter-spacing: 2px; }
+      .color-filters { gap: 6px; margin-bottom: 24px; }
+      .color-btn { font-size: 8px; padding: 5px 12px; letter-spacing: 2px; }
+
+      .prod-grille { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .carte { border-radius: 10px; }
+      .carte-img { aspect-ratio: 1/1; }
+      .carte-body { padding: 12px 14px 16px; }
+      .carte-nom { font-size: 13px; letter-spacing: 1.5px; margin-bottom: 4px; }
+      .carte-desc { font-size: 11px; margin-bottom: 10px; line-height: 1.5; }
+
+      .tailles { gap: 4px; margin-bottom: 12px; }
+      .taille { min-width: 26px; height: 26px; font-size: 9px; border-radius: 5px; }
+
+      .carte-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .carte-prix { font-size: 18px; }
+      .btn-cmd { width: 100%; text-align: center; padding: 9px 14px; font-size: 9px; letter-spacing: 1.5px; }
+
+      /* ── À PROPOS ── */
+      #apropos { padding: 50px 16px; }
+      .apropos-inner { grid-template-columns: 1fr; gap: 30px; }
+      .apropos-text { order: 1; }
+      .apropos-img { order: 2; }
+      .apropos-text h2 { font-size: 32px; letter-spacing: 3px; margin-bottom: 16px; }
+      .apropos-text p { font-size: 13px; line-height: 1.9; margin-bottom: 12px; }
+      .apropos-values { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
+      .val-card { padding: 22px 18px; }
+      .val-card i { font-size: 20px; margin-bottom: 12px; }
+      .val-card h4 { font-size: 14px; letter-spacing: 3px; margin-bottom: 8px; }
+      .val-card p { font-size: 12px; }
+
+      /* ── NEWSLETTER ── */
+      .newsletter { padding: 60px 16px; }
+      .newsletter i { font-size: 32px; margin-bottom: 14px; }
+      .newsletter h3 { font-size: 26px; letter-spacing: 5px; margin-bottom: 10px; }
+      .newsletter p { font-size: 13px; margin-bottom: 24px; }
+      .newsletter-form { flex-direction: column; align-items: center; gap: 10px; }
+      .newsletter-form input { width: 100%; max-width: 340px; padding: 12px 18px; }
+      .newsletter-form button { width: 100%; max-width: 340px; padding: 12px 24px; }
+
+      /* ── CONTACT ── */
+      #contact { padding: 50px 16px 50px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+      .contact-info h3 { font-size: 24px; letter-spacing: 3px; margin-bottom: 20px; }
+      .contact-item { padding: 14px 16px; gap: 12px; border-radius: 10px; }
+      .contact-item-icon { width: 34px; height: 34px; border-radius: 8px; }
+      .contact-item-icon i { font-size: 11px; }
+      .contact-item-label { font-size: 8px; letter-spacing: 2.5px; }
+      .contact-item-value { font-size: 13px; }
+      .footer-socials { gap: 8px; margin-top: 18px; }
+      .social-btn { width: 38px; height: 38px; font-size: 14px; border-radius: 9px; }
+
+      .contact-form-wrap { padding: 22px 18px; border-radius: 14px; }
+      .contact-form-wrap h3 { font-size: 16px; letter-spacing: 3px; margin-bottom: 20px; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .form-group { margin-bottom: 14px; }
+      .form-group label { font-size: 8px; letter-spacing: 2.5px; margin-bottom: 7px; }
+      .form-group input,
+      .form-group select,
+      .form-group textarea { font-size: 14px; padding: 11px 14px; border-radius: 9px; }
+
+      .btn-submit { padding: 13px; font-size: 10px; letter-spacing: 2.5px; border-radius: 9px; }
+
+      /* ── MODAL ── */
+      .modal-overlay { padding: 12px; align-items: flex-end; }
+      .modal { border-radius: 20px 20px 16px 16px; max-height: 92vh; }
+      .modal-header { padding: 20px 20px 16px; }
+      .modal-header h3 { font-size: 17px; letter-spacing: 3px; }
+      .modal-produit-info { padding: 14px 20px; gap: 12px; }
+      .modal-produit-icon { width: 44px; height: 44px; font-size: 22px; border-radius: 9px; }
+      .modal-produit-nom { font-size: 13px; letter-spacing: 1.5px; }
+      .modal-produit-prix { font-size: 12px; }
+      .modal-body { padding: 18px 20px; }
+      .taille-opt { padding: 7px 12px; font-size: 10px; border-radius: 7px; }
+      .total-row { padding: 12px 16px; border-radius: 9px; }
+      .total-label { font-size: 8px; letter-spacing: 2.5px; }
+      .total-val { font-size: 20px; }
+      .modal-footer { padding: 14px 20px; gap: 8px; }
+      .btn-cancel { padding: 13px 16px; font-size: 9px; letter-spacing: 1.5px; border-radius: 9px; }
+
+      /* ── FOOTER ── */
+      footer { padding: 50px 16px 0; }
+      .footer-grid-slim { flex-direction: column; gap: 32px; margin-bottom: 36px; align-items: flex-start; padding: 0 4px; }
+      .footer-col h5 { font-size: 12px; letter-spacing: 3px; margin-bottom: 14px; }
+      .footer-col ul li { margin-bottom: 10px; }
+      .footer-col ul li a { font-size: 13px; }
+      .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 22px 0; }
+      .footer-copy { font-size: 10px; letter-spacing: 1.5px; }
+
+      /* ── TICKER ── */
+      .ticker-track span { font-size: 20px; letter-spacing: 5px; }
+      .ticker-banner { padding: 14px 0; }
+
+      /* ── TOAST ── */
+      .toast { bottom: 16px; right: 16px; left: 16px; font-size: 13px; padding: 12px 18px; border-radius: 10px; }
+    }
+
+    /* ════════════════════════════════
+       RESPONSIVE — PETIT MOBILE (max 430px)
+    ════════════════════════════════ */
+    @media (max-width: 430px) {
+      .section-heading { font-size: 28px; letter-spacing: 4px; }
+      .categories-grid { gap: 10px; }
+      .cat-card img { height: 190px; }
+
+      /* Une colonne sur très petit écran */
+      .prod-grille { grid-template-columns: 1fr; gap: 14px; }
+      .carte-img { aspect-ratio: 4/3; }
+      .carte-footer { flex-direction: row; align-items: center; }
+      .btn-cmd { width: auto; }
+
+      .produits-tabs { gap: 6px; }
+      .tab-btn { font-size: 8px; padding: 8px 14px; letter-spacing: 1.5px; }
+
+      .apropos-text h2 { font-size: 28px; }
+      .contact-form-wrap { padding: 18px 14px; }
+      .modal-header h3 { font-size: 15px; }
+      .taille-opt { padding: 6px 10px; font-size: 9px; }
     }
   </style>
 </head>
@@ -628,31 +786,19 @@
 <nav class="navbar">
   <div class="nav-inner">
     <a class="logo-wrap" href="#accueil">
-      <img src="BIGDREAM LOGO.jpeg" alt="Logo"
-           onerror="this.style.display='none'">
-      <img src="bigdream ecriture.jpeg" alt="BIGDREAM"
-           onerror="this.outerHTML='<span class=\'logo-fallback\'>BIGDREAM</span>'">
+      <img src="BIGDREAM LOGO.jpeg" alt="Logo" onerror="this.style.display='none'">
+      <img src="bigdream ecriture.jpeg" alt="BIGDREAM" onerror="this.outerHTML='<span class=\'logo-fallback\'>BIGDREAM</span>'">
     </a>
-
     <button class="menu-btn" id="menuBtn" aria-expanded="false">
       <i class="fa-solid fa-bars" id="menuIcon"></i>
       <span>Menu</span>
     </button>
-
     <div class="nav-dropdown" id="navDropdown">
       <div class="nav-dropdown-header">Navigation</div>
-      <a href="#accueil">
-        <div class="nav-icon"><i class="fa-solid fa-house"></i></div>Accueil
-      </a>
-      <a href="#produits">
-        <div class="nav-icon"><i class="fa-solid fa-shirt"></i></div>Produits
-      </a>
-      <a href="#apropos">
-        <div class="nav-icon"><i class="fa-solid fa-circle-info"></i></div>À Propos
-      </a>
-      <a href="#contact" class="cta-link">
-        <i class="fa-solid fa-paper-plane" style="margin-right:8px"></i>Contact
-      </a>
+      <a href="#accueil"><div class="nav-icon"><i class="fa-solid fa-house"></i></div>Accueil</a>
+      <a href="#produits"><div class="nav-icon"><i class="fa-solid fa-shirt"></i></div>Produits</a>
+      <a href="#apropos"><div class="nav-icon"><i class="fa-solid fa-circle-info"></i></div>À Propos</a>
+      <a href="#contact" class="cta-link"><i class="fa-solid fa-paper-plane" style="margin-right:8px"></i>Contact</a>
     </div>
   </div>
 </nav>
@@ -664,26 +810,21 @@
       <source src="BIGDREAMvideo.mp4" type="video/mp4"/>
     </video>
   </div>
-
-  <!-- Catégories -->
   <div id="accueil-categories" class="reveal">
     <p class="section-label">Collection 2026</p>
     <h2 class="section-heading">CATÉGORIES</h2>
     <div class="section-line"></div>
     <div class="categories-grid">
       <div class="cat-card" onclick="scrollToTab('tshirt')">
-        <img src="tee-shirt bigdream.jpeg" alt="Tee-Shirts"
-             onerror="this.style.background='#111'">
+        <img src="tee-shirt bigdream.jpeg" alt="Tee-Shirts" onerror="this.style.background='#111'">
         <div class="cat-label">TEE-SHIRTS <span class="cat-arrow"><i class="fa-solid fa-arrow-right"></i></span></div>
       </div>
       <div class="cat-card" onclick="scrollToTab('bonnet')">
-        <img src="bonnet_fond_blanc (1).jpeg" alt="Bonnets"
-             onerror="this.style.background='#111'">
+        <img src="bonnet_fond_blanc (1).jpeg" alt="Bonnets" onerror="this.style.background='#111'">
         <div class="cat-label">BONNETS <span class="cat-arrow"><i class="fa-solid fa-arrow-right"></i></span></div>
       </div>
       <div class="cat-card" onclick="scrollToTab('collant')">
-        <img src="collant bigdream.jpeg" alt="Collants"
-             onerror="this.style.background='#111'">
+        <img src="collant bigdream.jpeg" alt="Collants" onerror="this.style.background='#111'">
         <div class="cat-label">COLLANTS <span class="cat-arrow"><i class="fa-solid fa-arrow-right"></i></span></div>
       </div>
     </div>
@@ -704,7 +845,6 @@
     <button class="tab-btn" onclick="ouvrirTab('collant',this)">COLLANTS</button>
   </div>
 
-  <!-- Filtres couleur -->
   <div class="color-filters" id="cf-tshirt">
     <button class="color-btn actif" onclick="filtrer('tshirt','tous',this)">TOUS</button>
     <button class="color-btn" onclick="filtrer('tshirt','blanc',this)">BLANC</button>
@@ -727,183 +867,99 @@
   <!-- TEE-SHIRTS -->
   <div class="produits-panel actif" id="panel-tshirt">
     <div class="prod-grille" id="grille-tshirt">
-
-      <div class="carte" data-couleur="blanc"
-           data-id="tshirt-blanc" data-nom="Tee-shirt BIGDREAM — Blanc"
-           data-prix="12000" data-icon="👕" data-tailles="XS,S,M,L,XL">
-        <div class="carte-img">
-          <img src="tee-shirt bigdream.jpeg" alt="Tee-shirt Blanc">
-          <span class="badge">BLANC</span>
-        </div>
+      <div class="carte" data-couleur="blanc" data-id="tshirt-blanc" data-nom="Tee-shirt BIGDREAM — Blanc" data-prix="12000" data-icon="👕" data-tailles="XS,S,M,L,XL">
+        <div class="carte-img"><img src="tee-shirt bigdream.jpeg" alt="Tee-shirt Blanc"><span class="badge">BLANC</span></div>
         <div class="carte-body">
           <p class="carte-nom">TEE-SHIRT BIGDREAM — BLANC</p>
           <p class="carte-desc">100% coton premium · Coupe oversize · Logo brodé</p>
           <div class="tailles"><div class="taille">XS</div><div class="taille">S</div><div class="taille">M</div><div class="taille">L</div><div class="taille">XL</div></div>
-          <div class="carte-footer">
-            <span class="carte-prix">12 000 F</span>
-            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
-          </div>
+          <div class="carte-footer"><span class="carte-prix">12 000 F</span><button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button></div>
         </div>
       </div>
-
-      <div class="carte" data-couleur="noir"
-           data-id="tshirt-noir" data-nom="Tee-shirt BIGDREAM — Noir"
-           data-prix="12000" data-icon="👕" data-tailles="XS,S,M,L,XL">
-        <div class="carte-img">
-          <img src="tee-shirt bigdream.jpeg" alt="Tee-shirt Noir">
-          <span class="badge">NOIR</span>
-        </div>
+      <div class="carte" data-couleur="noir" data-id="tshirt-noir" data-nom="Tee-shirt BIGDREAM — Noir" data-prix="12000" data-icon="👕" data-tailles="XS,S,M,L,XL">
+        <div class="carte-img"><img src="tee-shirt bigdream.jpeg" alt="Tee-shirt Noir"><span class="badge">NOIR</span></div>
         <div class="carte-body">
           <p class="carte-nom">TEE-SHIRT BIGDREAM — NOIR</p>
           <p class="carte-desc">100% coton premium · Coupe oversize · Logo brodé</p>
           <div class="tailles"><div class="taille">XS</div><div class="taille">S</div><div class="taille">M</div><div class="taille">L</div><div class="taille">XL</div></div>
-          <div class="carte-footer">
-            <span class="carte-prix">12 000 F</span>
-            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
-          </div>
+          <div class="carte-footer"><span class="carte-prix">12 000 F</span><button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button></div>
         </div>
       </div>
-
-      <div class="carte" data-couleur="gris"
-           data-id="tshirt-gris" data-nom="Tee-shirt BIGDREAM — Gris"
-           data-prix="12000" data-icon="👕" data-tailles="XS,S,M,L,XL">
-        <div class="carte-img">
-          <img src="tee-shirt bigdream.jpeg" alt="Tee-shirt Gris">
-          <span class="badge">GRIS</span>
-        </div>
+      <div class="carte" data-couleur="gris" data-id="tshirt-gris" data-nom="Tee-shirt BIGDREAM — Gris" data-prix="12000" data-icon="👕" data-tailles="XS,S,M,L,XL">
+        <div class="carte-img"><img src="tee-shirt bigdream.jpeg" alt="Tee-shirt Gris"><span class="badge">GRIS</span></div>
         <div class="carte-body">
           <p class="carte-nom">TEE-SHIRT BIGDREAM — GRIS</p>
           <p class="carte-desc">100% coton premium · Coupe oversize · Logo brodé</p>
           <div class="tailles"><div class="taille">XS</div><div class="taille">S</div><div class="taille">M</div><div class="taille">L</div><div class="taille">XL</div></div>
-          <div class="carte-footer">
-            <span class="carte-prix">12 000 F</span>
-            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
-          </div>
+          <div class="carte-footer"><span class="carte-prix">12 000 F</span><button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button></div>
         </div>
       </div>
-
     </div>
   </div>
 
   <!-- BONNETS -->
   <div class="produits-panel" id="panel-bonnet">
     <div class="prod-grille" id="grille-bonnet">
-
-      <div class="carte" data-couleur="blanc"
-           data-id="bonnet-blanc" data-nom="Bonnet BIGDREAM — Blanc"
-           data-prix="8000" data-icon="🧢" data-tailles="S/M,M/L,L/XL">
-        <div class="carte-img">
-          <img src="bonnet_fond_blanc (1).jpeg" alt="Bonnet Blanc">
-          <span class="badge">BLANC</span>
-        </div>
+      <div class="carte" data-couleur="blanc" data-id="bonnet-blanc" data-nom="Bonnet BIGDREAM — Blanc" data-prix="8000" data-icon="🧢" data-tailles="S/M,M/L,L/XL">
+        <div class="carte-img"><img src="bonnet_fond_blanc (1).jpeg" alt="Bonnet Blanc"><span class="badge">BLANC</span></div>
         <div class="carte-body">
           <p class="carte-nom">BONNET BIGDREAM — BLANC</p>
           <p class="carte-desc">Acrylique doux · Taille unique · Logo brodé frontal</p>
           <div class="tailles"><div class="taille">S/M</div><div class="taille">M/L</div><div class="taille">L/XL</div></div>
-          <div class="carte-footer">
-            <span class="carte-prix">8 000 F</span>
-            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
-          </div>
+          <div class="carte-footer"><span class="carte-prix">8 000 F</span><button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button></div>
         </div>
       </div>
-
-      <div class="carte" data-couleur="noir"
-           data-id="bonnet-noir" data-nom="Bonnet BIGDREAM — Noir"
-           data-prix="8000" data-icon="🧢" data-tailles="S/M,M/L,L/XL">
-        <div class="carte-img">
-          <img src="bonnet_fond_blanc (1).jpeg" alt="Bonnet Noir">
-          <span class="badge">NOIR</span>
-        </div>
+      <div class="carte" data-couleur="noir" data-id="bonnet-noir" data-nom="Bonnet BIGDREAM — Noir" data-prix="8000" data-icon="🧢" data-tailles="S/M,M/L,L/XL">
+        <div class="carte-img"><img src="bonnet_fond_blanc (1).jpeg" alt="Bonnet Noir"><span class="badge">NOIR</span></div>
         <div class="carte-body">
           <p class="carte-nom">BONNET BIGDREAM — NOIR</p>
           <p class="carte-desc">Laine mélangée · Logo script cursive · Revers doux</p>
           <div class="tailles"><div class="taille">S/M</div><div class="taille">M/L</div><div class="taille">L/XL</div></div>
-          <div class="carte-footer">
-            <span class="carte-prix">8 000 F</span>
-            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
-          </div>
+          <div class="carte-footer"><span class="carte-prix">8 000 F</span><button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button></div>
         </div>
       </div>
-
-      <div class="carte" data-couleur="gris"
-           data-id="bonnet-gris" data-nom="Bonnet BIGDREAM — Gris"
-           data-prix="8000" data-icon="🧢" data-tailles="S/M,M/L,L/XL">
-        <div class="carte-img">
-          <img src="bonnet_fond_blanc (1).jpeg" alt="Bonnet Gris">
-          <span class="badge">GRIS</span>
-        </div>
+      <div class="carte" data-couleur="gris" data-id="bonnet-gris" data-nom="Bonnet BIGDREAM — Gris" data-prix="8000" data-icon="🧢" data-tailles="S/M,M/L,L/XL">
+        <div class="carte-img"><img src="bonnet_fond_blanc (1).jpeg" alt="Bonnet Gris"><span class="badge">GRIS</span></div>
         <div class="carte-body">
           <p class="carte-nom">BONNET BIGDREAM — GRIS</p>
           <p class="carte-desc">Acrylique doux · Taille unique · Logo brodé frontal</p>
           <div class="tailles"><div class="taille">S/M</div><div class="taille">M/L</div><div class="taille">L/XL</div></div>
-          <div class="carte-footer">
-            <span class="carte-prix">8 000 F</span>
-            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
-          </div>
+          <div class="carte-footer"><span class="carte-prix">8 000 F</span><button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button></div>
         </div>
       </div>
-
     </div>
   </div>
 
   <!-- COLLANTS -->
   <div class="produits-panel" id="panel-collant">
     <div class="prod-grille" id="grille-collant">
-
-      <div class="carte" data-couleur="noir"
-           data-id="collant-noir" data-nom="Collant BIGDREAM — Noir"
-           data-prix="10000" data-icon="🩱" data-tailles="XS,S,M,L,XL">
-        <div class="carte-img">
-          <img src="collant bigdream.jpeg" alt="Collant Noir">
-          <span class="badge">NOIR</span>
-        </div>
+      <div class="carte" data-couleur="noir" data-id="collant-noir" data-nom="Collant BIGDREAM — Noir" data-prix="10000" data-icon="🩱" data-tailles="XS,S,M,L,XL">
+        <div class="carte-img"><img src="collant bigdream.jpeg" alt="Collant Noir"><span class="badge">NOIR</span></div>
         <div class="carte-body">
           <p class="carte-nom">COLLANT BIGDREAM — NOIR</p>
           <p class="carte-desc">Polyester stretch · Coupe ajustée · Logo imprimé cuisse</p>
           <div class="tailles"><div class="taille">XS</div><div class="taille">S</div><div class="taille">M</div><div class="taille">L</div><div class="taille">XL</div></div>
-          <div class="carte-footer">
-            <span class="carte-prix">10 000 F</span>
-            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
-          </div>
+          <div class="carte-footer"><span class="carte-prix">10 000 F</span><button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button></div>
         </div>
       </div>
-
-      <div class="carte" data-couleur="gris"
-           data-id="collant-gris" data-nom="Collant BIGDREAM — Gris"
-           data-prix="10000" data-icon="🩱" data-tailles="XS,S,M,L,XL">
-        <div class="carte-img">
-          <img src="collant bigdream.jpeg" alt="Collant Gris">
-          <span class="badge">GRIS</span>
-        </div>
+      <div class="carte" data-couleur="gris" data-id="collant-gris" data-nom="Collant BIGDREAM — Gris" data-prix="10000" data-icon="🩱" data-tailles="XS,S,M,L,XL">
+        <div class="carte-img"><img src="collant bigdream.jpeg" alt="Collant Gris"><span class="badge">GRIS</span></div>
         <div class="carte-body">
           <p class="carte-nom">COLLANT BIGDREAM — GRIS</p>
           <p class="carte-desc">Polyester stretch · Coupe ajustée · Logo imprimé cuisse</p>
           <div class="tailles"><div class="taille">XS</div><div class="taille">S</div><div class="taille">M</div><div class="taille">L</div><div class="taille">XL</div></div>
-          <div class="carte-footer">
-            <span class="carte-prix">10 000 F</span>
-            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
-          </div>
+          <div class="carte-footer"><span class="carte-prix">10 000 F</span><button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button></div>
         </div>
       </div>
-
-      <div class="carte" data-couleur="blanc"
-           data-id="collant-blanc" data-nom="Collant BIGDREAM — Blanc"
-           data-prix="10000" data-icon="🩱" data-tailles="XS,S,M,L,XL">
-        <div class="carte-img">
-          <img src="collant bigdream.jpeg" alt="Collant Blanc">
-          <span class="badge">BLANC</span>
-        </div>
+      <div class="carte" data-couleur="blanc" data-id="collant-blanc" data-nom="Collant BIGDREAM — Blanc" data-prix="10000" data-icon="🩱" data-tailles="XS,S,M,L,XL">
+        <div class="carte-img"><img src="collant bigdream.jpeg" alt="Collant Blanc"><span class="badge">BLANC</span></div>
         <div class="carte-body">
           <p class="carte-nom">COLLANT BIGDREAM — BLANC</p>
           <p class="carte-desc">Polyester stretch · Coupe ajustée · Logo imprimé cuisse</p>
           <div class="tailles"><div class="taille">XS</div><div class="taille">S</div><div class="taille">M</div><div class="taille">L</div><div class="taille">XL</div></div>
-          <div class="carte-footer">
-            <span class="carte-prix">10 000 F</span>
-            <button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button>
-          </div>
+          <div class="carte-footer"><span class="carte-prix">10 000 F</span><button class="btn-cmd" onclick="ouvrirCommande(this.closest('.carte'))">COMMANDER</button></div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -915,7 +971,6 @@
   <p class="section-label reveal">Notre Histoire</p>
   <h2 class="section-heading reveal">À PROPOS</h2>
   <div class="section-line"></div>
-
   <div class="apropos-inner reveal">
     <div class="apropos-text">
       <h2>BIGDREAM<span> — DAKAR</span></h2>
@@ -924,27 +979,13 @@
       <p><strong>Purses your dream.</strong> Ce n'est pas juste un slogan — c'est notre raison d'être.</p>
     </div>
     <div class="apropos-img">
-      <img src="BIGDREAM LOGO.jpeg" alt="BIGDREAM Logo"
-           onerror="this.style.padding='80px';this.style.background='#111'">
+      <img src="BIGDREAM LOGO.jpeg" alt="BIGDREAM Logo" onerror="this.style.padding='80px';this.style.background='#111'">
     </div>
   </div>
-
   <div class="apropos-values">
-    <div class="val-card reveal">
-      <i class="fa-solid fa-gem"></i>
-      <h4>QUALITÉ</h4>
-      <p>Matières soigneusement sélectionnées pour un confort et une durabilité maximaux.</p>
-    </div>
-    <div class="val-card reveal" style="transition-delay:0.12s">
-      <i class="fa-solid fa-fire"></i>
-      <h4>STYLE</h4>
-      <p>Des designs qui fusionnent l'authenticité sénégalaise avec le streetwear mondial.</p>
-    </div>
-    <div class="val-card reveal" style="transition-delay:0.24s">
-      <i class="fa-solid fa-star"></i>
-      <h4>AMBITION</h4>
-      <p>Chaque pièce est un rappel de poursuivre ses rêves sans compromis.</p>
-    </div>
+    <div class="val-card reveal"><i class="fa-solid fa-gem"></i><h4>QUALITÉ</h4><p>Matières soigneusement sélectionnées pour un confort et une durabilité maximaux.</p></div>
+    <div class="val-card reveal" style="transition-delay:0.12s"><i class="fa-solid fa-fire"></i><h4>STYLE</h4><p>Des designs qui fusionnent l'authenticité sénégalaise avec le streetwear mondial.</p></div>
+    <div class="val-card reveal" style="transition-delay:0.24s"><i class="fa-solid fa-star"></i><h4>AMBITION</h4><p>Chaque pièce est un rappel de poursuivre ses rêves sans compromis.</p></div>
   </div>
 </section>
 
@@ -955,30 +996,20 @@
   <p class="section-label reveal">Nous Joindre</p>
   <h2 class="section-heading reveal">CONTACT</h2>
   <div class="section-line"></div>
-
   <div class="contact-grid reveal">
     <div class="contact-info">
       <h3>ON EST LÀ POUR VOUS</h3>
       <div class="contact-item">
         <div class="contact-item-icon"><i class="fa-solid fa-location-dot"></i></div>
-        <div>
-          <p class="contact-item-label">Adresse</p>
-          <p class="contact-item-value">Dakar, Sénégal</p>
-        </div>
+        <div><p class="contact-item-label">Adresse</p><p class="contact-item-value">Dakar, Sénégal</p></div>
       </div>
       <div class="contact-item">
         <div class="contact-item-icon"><i class="fa-solid fa-envelope"></i></div>
-        <div>
-          <p class="contact-item-label">Email</p>
-          <p class="contact-item-value">BIGDREAM@GMAIL.COM</p>
-        </div>
+        <div><p class="contact-item-label">Email</p><p class="contact-item-value">BIGDREAM@GMAIL.COM</p></div>
       </div>
       <div class="contact-item">
         <div class="contact-item-icon"><i class="fa-brands fa-whatsapp"></i></div>
-        <div>
-          <p class="contact-item-label">WhatsApp</p>
-          <p class="contact-item-value">+221 76 933 81 43</p>
-        </div>
+        <div><p class="contact-item-label">WhatsApp</p><p class="contact-item-value">+221 76 933 81 43</p></div>
       </div>
       <div class="footer-socials">
         <a href="https://www.instagram.com/bigdream_sn/" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
@@ -986,27 +1017,14 @@
         <a href="https://wa.me/221769338143" target="_blank" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
     </div>
-
     <div class="contact-form-wrap">
       <h3>ENVOYER UN MESSAGE</h3>
       <div class="form-row">
-        <div class="form-group">
-          <label>Nom *</label>
-          <input type="text" id="c-nom" placeholder="Votre nom">
-        </div>
-        <div class="form-group">
-          <label>Email *</label>
-          <input type="email" id="c-email" placeholder="votre@email.com">
-        </div>
+        <div class="form-group"><label>Nom *</label><input type="text" id="c-nom" placeholder="Votre nom"></div>
+        <div class="form-group"><label>Email *</label><input type="email" id="c-email" placeholder="votre@email.com"></div>
       </div>
-      <div class="form-group">
-        <label>Sujet</label>
-        <input type="text" id="c-sujet" placeholder="Objet de votre message">
-      </div>
-      <div class="form-group">
-        <label>Message *</label>
-        <textarea id="c-message" rows="5" placeholder="Votre message..."></textarea>
-      </div>
+      <div class="form-group"><label>Sujet</label><input type="text" id="c-sujet" placeholder="Objet de votre message"></div>
+      <div class="form-group"><label>Message *</label><textarea id="c-message" rows="5" placeholder="Votre message..."></textarea></div>
       <button class="btn-submit" onclick="envoyerContact()" style="width:100%">ENVOYER LE MESSAGE</button>
     </div>
   </div>
@@ -1016,7 +1034,6 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-grid-slim reveal">
-
       <div class="footer-col">
         <h5>Menu</h5>
         <ul>
@@ -1026,7 +1043,6 @@
           <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <h5>Produits</h5>
         <ul>
@@ -1036,95 +1052,22 @@
           <li><a href="#">Politique de confidentialité</a></li>
         </ul>
       </div>
-
     </div>
-
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 BIGDREAM — Dakar, Sénégal. Tous droits réservés.</span>
       <span class="footer-copy">PURSES YOUR DREAM</span>
     </div>
   </div>
-
-  <style>
-    .ticker-banner {
-      background: #fff;
-      color: #000;
-      overflow: hidden;
-      white-space: nowrap;
-      border-top: 3px solid #000;
-      padding: 18px 0;
-      position: relative;
-      cursor: default;
-    }
-    .ticker-banner::before,
-    .ticker-banner::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 80px;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .ticker-banner::before {
-      left: 0;
-      background: linear-gradient(to right, #fff, transparent);
-    }
-    .ticker-banner::after {
-      right: 0;
-      background: linear-gradient(to left, #fff, transparent);
-    }
-
-    .ticker-track {
-      display: inline-flex;
-      align-items: center;
-      gap: 32px;
-      animation: ticker 22s linear infinite;
-      will-change: transform;
-    }
-    .ticker-banner:hover .ticker-track {
-      animation-play-state: paused;
-    }
-
-    .ticker-track span {
-      font-family: 'Bebas Neue', 'Cambria', Georgia, serif;
-      font-size: 26px;
-      font-weight: 900;
-      letter-spacing: 8px;
-      text-transform: uppercase;
-      color: #000;
-      flex-shrink: 0;
-    }
-    .ticker-track .ticker-dot {
-      font-size: 14px;
-      letter-spacing: 0;
-      color: #888;
-      flex-shrink: 0;
-    }
-
-    @keyframes ticker {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-  </style>
-  <!-- TICKER BANNER -->
   <div class="ticker-banner">
     <div class="ticker-track">
-      <span>PURSES YOUR DREAM</span>
-      <span class="ticker-dot">✦</span>
-      <span>PURSES YOUR DREAM</span>
-      <span class="ticker-dot">✦</span>
-      <span>PURSES YOUR DREAM</span>
-      <span class="ticker-dot">✦</span>
-      <span>PURSES YOUR DREAM</span>
-      <span class="ticker-dot">✦</span>
-      <span>PURSES YOUR DREAM</span>
-      <span class="ticker-dot">✦</span>
-      <span>PURSES YOUR DREAM</span>
-      <span class="ticker-dot">✦</span>
-      <span>PURSES YOUR DREAM</span>
-      <span class="ticker-dot">✦</span>
-      <span>PURSES YOUR DREAM</span>
-      <span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span><span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span><span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span><span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span><span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span><span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span><span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span><span class="ticker-dot">✦</span>
+      <span>PURSES YOUR DREAM</span><span class="ticker-dot">✦</span>
     </div>
   </div>
 </footer>
@@ -1146,41 +1089,20 @@
     <div class="modal-body">
       <input type="hidden" id="modal-produit-id">
       <div class="form-row">
-        <div class="form-group">
-          <label>Nom complet *</label>
-          <input type="text" id="o-nom" placeholder="Votre nom complet">
-        </div>
-        <div class="form-group">
-          <label>Téléphone *</label>
-          <input type="tel" id="o-telephone" placeholder="77 000 00 00">
-        </div>
+        <div class="form-group"><label>Nom complet *</label><input type="text" id="o-nom" placeholder="Votre nom complet"></div>
+        <div class="form-group"><label>Téléphone *</label><input type="tel" id="o-telephone" placeholder="77 000 00 00"></div>
       </div>
-      <div class="form-group">
-        <label>Email (optionnel)</label>
-        <input type="email" id="o-email" placeholder="votre@email.com">
-      </div>
-      <div class="form-group">
-        <label>Adresse de livraison *</label>
-        <input type="text" id="o-adresse" placeholder="Quartier, rue, ville...">
-      </div>
-      <div class="form-group">
-        <label>Taille *</label>
-        <div class="tailles-modal" id="modal-tailles"></div>
-      </div>
+      <div class="form-group"><label>Email (optionnel)</label><input type="email" id="o-email" placeholder="votre@email.com"></div>
+      <div class="form-group"><label>Adresse de livraison *</label><input type="text" id="o-adresse" placeholder="Quartier, rue, ville..."></div>
+      <div class="form-group"><label>Taille *</label><div class="tailles-modal" id="modal-tailles"></div></div>
       <div class="form-group">
         <label>Quantité *</label>
         <select id="o-quantite">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
+          <option value="1">1</option><option value="2">2</option>
+          <option value="3">3</option><option value="4">4</option><option value="5">5</option>
         </select>
       </div>
-      <div class="form-group">
-        <label>Note (optionnel)</label>
-        <textarea id="o-note" rows="2" placeholder="Instructions spéciales..."></textarea>
-      </div>
+      <div class="form-group"><label>Note (optionnel)</label><textarea id="o-note" rows="2" placeholder="Instructions spéciales..."></textarea></div>
       <div class="total-row">
         <span class="total-label">Total estimé</span>
         <span class="total-val" id="modal-total">—</span>
@@ -1232,12 +1154,10 @@ function ouvrirTab(tab, btn) {
   document.getElementById('panel-' + tab).classList.add('actif');
   document.getElementById('cf-' + tab).style.display = 'flex';
   if (btn) btn.classList.add('actif');
-  // reset filtre
   const cf = document.getElementById('cf-' + tab);
   cf.querySelectorAll('.color-btn').forEach(b => b.classList.remove('actif'));
   cf.querySelector('.color-btn').classList.add('actif');
   filtrer(tab, 'tous', cf.querySelector('.color-btn'));
-  // animation
   document.querySelectorAll('#grille-' + tab + ' .carte').forEach((c, i) => {
     c.style.animation = 'none';
     setTimeout(() => {
@@ -1341,27 +1261,14 @@ function soumettreCommande() {
   const nom = document.getElementById('o-nom').value.trim();
   const telephone = document.getElementById('o-telephone').value.trim();
   const adresse = document.getElementById('o-adresse').value.trim();
-  if (!nom || !telephone || !adresse) {
-    afficherToast('Veuillez remplir tous les champs obligatoires.', 'error');
-    return;
-  }
-  if (!tailleSelectionnee) {
-    afficherToast('Veuillez sélectionner une taille.', 'error');
-    return;
-  }
+  if (!nom || !telephone || !adresse) { afficherToast('Veuillez remplir tous les champs obligatoires.', 'error'); return; }
+  if (!tailleSelectionnee) { afficherToast('Veuillez sélectionner une taille.', 'error'); return; }
   const qte = parseInt(document.getElementById('o-quantite').value);
   const total = (produitEnCours.prix * qte).toLocaleString('fr-FR');
-
-  // Envoi WhatsApp avec récapitulatif
   const msg = encodeURIComponent(
     `🛍️ COMMANDE BIGDREAM\n\n` +
-    `Produit : ${produitEnCours.nom}\n` +
-    `Taille  : ${tailleSelectionnee}\n` +
-    `Quantité: ${qte}\n` +
-    `Total   : ${total} F CFA\n\n` +
-    `👤 Nom     : ${nom}\n` +
-    `📞 Tél     : ${telephone}\n` +
-    `📍 Adresse : ${adresse}` +
+    `Produit : ${produitEnCours.nom}\nTaille  : ${tailleSelectionnee}\nQuantité: ${qte}\nTotal   : ${total} F CFA\n\n` +
+    `👤 Nom     : ${nom}\n📞 Tél     : ${telephone}\n📍 Adresse : ${adresse}` +
     (document.getElementById('o-email').value ? `\n📧 Email   : ${document.getElementById('o-email').value}` : '') +
     (document.getElementById('o-note').value ? `\n💬 Note    : ${document.getElementById('o-note').value}` : '')
   );
@@ -1375,32 +1282,15 @@ function envoyerContact() {
   const nom = document.getElementById('c-nom').value.trim();
   const email = document.getElementById('c-email').value.trim();
   const message = document.getElementById('c-message').value.trim();
-  if (!nom || !email || !message) {
-    afficherToast('Veuillez remplir tous les champs obligatoires.', 'error');
-    return;
-  }
+  if (!nom || !email || !message) { afficherToast('Veuillez remplir tous les champs obligatoires.', 'error'); return; }
   const sujet = document.getElementById('c-sujet').value.trim();
   const msg = encodeURIComponent(
-    `📩 MESSAGE BIGDREAM\n\n` +
-    `Nom  : ${nom}\n` +
-    `Email: ${email}\n` +
-    (sujet ? `Sujet: ${sujet}\n` : '') +
-    `\n${message}`
+    `📩 MESSAGE BIGDREAM\n\nNom  : ${nom}\nEmail: ${email}\n` +
+    (sujet ? `Sujet: ${sujet}\n` : '') + `\n${message}`
   );
   ['c-nom','c-email','c-sujet','c-message'].forEach(id => document.getElementById(id).value = '');
   afficherToast('Message envoyé avec succès !', 'success');
-  setTimeout(() => window.open('https://wa.me/221769338143?text=' + msg, '_blank'), 900);
-}
-
-/* ══ NEWSLETTER ══ */
-function inscriptionNewsletter() {
-  const email = document.getElementById('nl-email').value.trim();
-  if (!email || !email.includes('@')) {
-    afficherToast('Veuillez entrer une adresse email valide.', 'error');
-    return;
-  }
-  document.getElementById('nl-email').value = '';
-  afficherToast('Inscription confirmée ! Bienvenue dans la famille BIGDREAM.', 'success');
+  setTimeout(() => window.open('https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox' + msg, '_blank'), 900);
 }
 
 /* ══ TOAST ══ */
